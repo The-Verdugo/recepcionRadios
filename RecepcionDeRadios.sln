@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecepcionDeRadios", "RecepcionDeRadios\RecepcionDeRadios.csproj", "{23DA72A1-E23B-4DE2-AE13-74168FDBAB28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecepcionDeRadios.Tests", "RecepcionDeRadios.Tests\RecepcionDeRadios.Tests.csproj", "{43D68D9F-9FAD-4DD3-A10E-8487543545EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23DA72A1-E23B-4DE2-AE13-74168FDBAB28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23DA72A1-E23B-4DE2-AE13-74168FDBAB28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23DA72A1-E23B-4DE2-AE13-74168FDBAB28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23DA72A1-E23B-4DE2-AE13-74168FDBAB28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43D68D9F-9FAD-4DD3-A10E-8487543545EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43D68D9F-9FAD-4DD3-A10E-8487543545EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43D68D9F-9FAD-4DD3-A10E-8487543545EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43D68D9F-9FAD-4DD3-A10E-8487543545EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC9DF2C5-64A3-41B2-9B6E-D3F870C7D31D}
+	EndGlobalSection
+EndGlobal
