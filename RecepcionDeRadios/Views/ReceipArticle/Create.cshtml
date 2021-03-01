@@ -1,0 +1,161 @@
+﻿@model RecepcionDeRadios.Models.ReceipArticle
+
+@{
+    ViewBag.Title = "Create";
+}
+@section Styles {
+    <link href="@Url.Content("~/Content/ReceipArticle.css")" rel="stylesheet" type="text/css" />
+}
+
+<h2>Create</h2>
+<h4>ReceipArticle</h4>
+<hr />
+<div class="row ReceipArticle">
+    <div class="split left">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="numeroColaborador">No Colaborador</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="NoEmpleado" name="usuarioRecibe" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Nombre">Nombre</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Nombre" name="Nombre" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Puesto">Puesto</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Puesto" name="Puesto" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Departamento">Departamento</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Departamento" name="Departamento" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="IdArticulo">ID Articulo</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="IdArticulo" name="IdArticulo" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Descripcion">Descripcion</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Descripcion" name="Descripcion" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Marca">Marca</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Marca" name="Marca" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Modelo">Modelo</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Modelo" name="Modelo" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Falla">Falla</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Falla" name="Falla" type="text" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn-default" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="split right">
+        <div id="articles">
+            <h2>Articulos</h2>
+
+            <div class="courses-container">
+                <div class="course">
+                    <div class="course-preview">
+                        <h6>Article</h6>
+                        <h4>Radio Motorola</h4>
+                    </div>
+                    <div class="course-info">
+                        <h6>Estado</h6>
+                        <h4>Entregado a TI</h4>
+                        <button class="btn">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript">
+
+    const claveEmpleado = document.getElementById("NoEmpleado")
+    const nombre = document.getElementById("Nombre")
+    const puesto = document.getElementById("Puesto")
+    const departamento = document.getElementById("Departamento")
+    claveEmpleado.addEventListener("blur", function () {
+        getEmployeeData()
+    })
+
+    const IdArticulo = document.getElementById("IdArticulo")
+    const descripcion = document.getElementById("Descripcion")
+    const marca = document.getElementById("Marca")
+    const modelo = document.getElementById("Modelo")
+    IdArticulo.addEventListener("blur",function() {
+            getArticleData()
+    })
+
+    function getEmployeeData() {
+        let clave = claveEmpleado.value
+        fetch(`http://10.23.20.40:8080/api/empleados/oth/${clave}`)
+            .then(response => response.json())
+            .then(data => {
+                nombre.value = `${data.Nombre} ${data.Apellidos}`
+                puesto.value = data.PuestoNom
+                departamento.value = data.DepartamentoNom
+            })
+            .catch((error) => console.error(error.message))
+    }
+
+    function getArticleData() {
+        let id = IdArticulo.value
+        fetch(`http://10.23.20.40:8080/api/articulos/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                descripcion.value = data.Descripcion
+                marca.value = data.Marca
+                modelo.value = data.Modelo
+            })
+            .catch((error) => console.error(error.message))
+    }
+</script>
+

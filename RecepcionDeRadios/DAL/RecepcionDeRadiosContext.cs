@@ -21,6 +21,8 @@ namespace RecepcionDeRadios.DAL
         //public DbSet<Empresa> Empresas { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserRolesMapping> UserRolesMapping { get; set; }
+        public virtual DbSet<ReceipArticle> ReceipArticles { get; set; }
+        public virtual DbSet<ReceipArticleDetail> ReceipArticleDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

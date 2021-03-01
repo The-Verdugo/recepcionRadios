@@ -1,0 +1,50 @@
+﻿@model RecepcionDeRadios.Models.ReceipArticle
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReceipArticle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioRecibe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioRecibe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.empleadoEntrega)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.empleadoEntrega)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaRecibido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaRecibido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaEntregado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaEntregado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
