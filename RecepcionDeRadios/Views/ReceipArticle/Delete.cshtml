@@ -48,9 +48,9 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div class="form-actions no-color">
+        <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Back to list</a> |
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+    </div>
     }
 </div>

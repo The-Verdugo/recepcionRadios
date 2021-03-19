@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace RecepcionDeRadios.Models
         public int ID { get; set; }
         public string usuarioRecibe { get; set; }
         public string usuarioEntrega { get; set; }
+        [Required]
+        [DisplayName("Empleado que entrega")]
         public string empleadoEntrega { get; set; }
         public string empleadoRecibe { get; set; }
         public DateTime fechaRecibido { get; set; }

@@ -13,9 +13,12 @@ namespace RecepcionDeRadios.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int ReceipArticleID { get; set; }
+        [Required]
         public string ArticleID { get; set; }
+        [Required]
         public string ReportedFailure { get; set; }
         public int Status { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
         public virtual ReceipArticle ReceipArticle { get; set; }
 
     }

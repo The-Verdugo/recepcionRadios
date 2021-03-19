@@ -3,10 +3,12 @@
 @{
     ViewBag.Title = "Details";
 }
-
+@section Styles {
+    <link href="@Url.Content("~/Content/ReceipArticle.css")" rel="stylesheet" type="text/css" />
+}
 <h2>Details</h2>
 
-<div>
+<div class="col-lg-6">
     <h4>ReceipArticle</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -43,8 +45,30 @@
         </dd>
 
     </dl>
+    <p>
+    <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Back to list</a> |
+    <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="split right col-lg-6">
+    <div id="articles" class="articles-container">
+        <h2>Articulos</h2>
+        @foreach (var item in Model.ReceipArticleDetails)
+                {
+                    <div class="article" id="article'+i+'">
+                        <div class="article-preview"> 
+                            <h6>ID</h6>
+                            <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
+                        </div>
+                        <div class="article-info"> 
+                            <h6>Falla</h6>
+                            <h4>@Html.DisplayFor(modelItem => item.ReportedFailure)</h4>
+                            @Html.ActionLink("Actualizar Estatus", "Edit","ReceipArticleDetail", new { id=item.Id },new{@class="btn btn-warning btn-xs"})
+                            @Html.ActionLink("Eliminar", "Delete","ReceipArticleDetail", new { id=item.Id },new{@class="btn btn-danger btn-xs"})
+                        </div>
+                    </div>
+                }
+    </div>
+</div>
+

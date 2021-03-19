@@ -9,12 +9,14 @@ using System.Web.Security;
 
 namespace RecepcionDeRadios.Controllers
 {
+    
     public class HomeController : Controller
     {
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
+      
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("create","receiparticle");
         }
 
         public ActionResult Login()
@@ -28,18 +30,20 @@ namespace RecepcionDeRadios.Controllers
             if (ModelState.IsValid)
             {
                 var UserExists = db.Users.Where(u => u.Username == usuario.User).FirstOrDefault();
+                var Name = (from c in db.Users select c.Name).First();
                 if (UserExists != null)
                 {
                     bool IsValidUser = BCrypt.Net.BCrypt.Verify(usuario.Password, UserExists?.Password);
 
                     if (IsValidUser)
                     {
+                        ViewBag.Name = Name;
                         FormsAuthentication.SetAuthCookie(UserExists.ID, false);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("create","receiparticle");
                     }
                 }
             }
-            ModelState.AddModelError("", "invalid Username or Password");
+            ModelState.AddModelError("LOGIN_ERROR", "Invalid Username or Password");
             return View();
         }
 

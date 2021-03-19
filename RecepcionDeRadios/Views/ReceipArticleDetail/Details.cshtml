@@ -1,11 +1,5 @@
 ﻿@model RecepcionDeRadios.Models.ReceipArticleDetail
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
 <div>
     <h4>ReceipArticleDetail</h4>
     <hr />
@@ -27,6 +21,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.ReportedFailure)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportedFailure)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Status)
         </dt>
 
@@ -38,5 +40,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="javascript:history.back();">Retroceder</a>
 </p>

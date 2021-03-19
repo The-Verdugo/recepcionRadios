@@ -28,5 +28,7 @@ namespace RecepcionDeRadios.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public DbSet<Comment> Comments { get; set; }
     }
 }
