@@ -4,10 +4,10 @@ var i=0;//Contador para cargas individuales de elementos
 //Funcion para agregar tarjetas al Div de los articulos
 function addElemento(){
   if($('#IdArticulo').val().trim()=="" ){
-    alert('El campo ID Articulo es obligatorio');
+    addAlertsError('El campo ID Articulo es obligatorio');
     document.getElementById("IdArticulo").focus();
   }else if($('#Falla').val().trim()==""){
-    alert('El campo Falla es obligatorio');
+    addAlertsError('El campo Falla es obligatorio');
     document.getElementById("Falla").focus();
   }else{
   var objeto = {
@@ -31,6 +31,21 @@ function addElemento(){
   receipArticleDetails.push(objeto);
   }
 }
+//Crea alertas de Error en el DOM
+function addAlertsError(text){
+  var cardAlert = '<div class="alert alert-danger alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong></button></div>' 
+      $('#formReceipContainer').before(cardAlert);
+}
+//Crea alertas Success en el DOM
+function addAlertsSuccess(text){
+  var cardAlert = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong></button></div>' 
+      $('#formReceipContainer').before(cardAlert);
+}
+//Crea Alertas Success Con Boton en el DOM 
+function addAlertsSuccessBtn(text,btnText){
+  var cardAlertbtn = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong><div class="form-group"><button class="btn btn-primary" id="btnAlertSuccess">'+btnText+'</button></div></button></div>' 
+      $('#formReceipContainer').before(cardAlertbtn);
+}
 
 var c=0;//Contador para cargas completas de elementos 
 
@@ -41,9 +56,9 @@ $(function() {
       empleadoEntrega: $('#NoEmpleado').val().trim(),
       receipArticleDetails: receipArticleDetails
   }
-    if(i==0) {
-      alert('Primero debe agregar un articulo');
-    }else{
+  if(i==0) {
+      addAlertsError("Primero debe agregar un artículo");
+  }else{
     
     $(this).val('Espera un momento...');
 
@@ -56,13 +71,15 @@ $(function() {
     
         contentType: 'application/json',
         success: function (data) { //Respuesta afirmativa desde el controlador
-            if (data.estado) {
-                alert('Articulo agregado correctamente');
+            if (data.estado) {//Comprobacion de que los datos fueron agregados
+                addAlertsSuccess("Articulo Agregado Correctamente");
+                // alert('Articulo agregado correctamente');
                 location.href ="/receiparticle/index";
             }
-            else {
-                alert('Ocurrio un error al intentar guardar los datos, compruebe todos los campos obligatorios');
-                document.getElementById("Noempleado").focus();
+            else {//Error al agregar los datos
+                addAlertsError("El Número de colaborador es obligatorio");
+                // alert('Ocurrio un error al intentar guardar los datos, ingrese un número de colaborador válido');
+                document.getElementById("NoEmpleado").focus();
             }
             $('#saveData').val('Guardar Cambios');
         },
@@ -71,9 +88,14 @@ $(function() {
             $('#saveData').val('Guardar Cambios');
         }
     });
+
     c++;
   }
   })
+  //evento click del boton de ver listado de articulos en el alert
+  $(document).on('click', '#btnAlertSuccess', function() {
+    location.href ="/receiparticle/index";
+  });
   //Funcion para agregar articulos al arreglo
   $('#agregarArticulo').click(function(){
     addElemento();

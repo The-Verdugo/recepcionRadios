@@ -94,10 +94,9 @@ namespace RecepcionDeRadios.Controllers
                         {
                             fechaRecibido = DateTime.Now.Date,
                             usuarioRecibe = User.Identity.Name,
-                            fechaEntregado = DateTime.Now.Date,
+                            fechaEntregado = DateTime.Now,
                             empleadoEntrega = receip.empleadoEntrega
                         };
-
                         db.ReceipArticles.Add(test);
                         db.SaveChanges();
                         var ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First();

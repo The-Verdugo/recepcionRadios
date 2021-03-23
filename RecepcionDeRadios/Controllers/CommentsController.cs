@@ -49,7 +49,7 @@ namespace RecepcionDeRadios.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ReceipArticleDetailID,Content")] Comment comment)
+        public ActionResult Create([Bind(Include = "ID,ReceipArticleDetailID,Username,Subject,Content,fecha")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace RecepcionDeRadios.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,ReceipArticleDetailID,Content")] Comment comment)
+        public ActionResult Edit([Bind(Include = "ID,ReceipArticleDetailID,Username,Subject,Content,fecha")] Comment comment)
         {
             if (ModelState.IsValid)
             {

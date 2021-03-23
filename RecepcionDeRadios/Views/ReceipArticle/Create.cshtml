@@ -8,11 +8,11 @@
     <link href="@Url.Content("~/Content/ReceipArticle.css")" rel="stylesheet" type="text/css" />
 }
 
-<h2>Recepcion de Articulo</h2>
-<span class="label label-warning">* Campos obligatorios</span>
-<hr />
 <div class="container col-12">
-    <div class="col-md-7 col-sm-12">
+    <div class="col-md-7 col-sm-12" id="formReceipContainer">
+        <h2>Recepcion de Articulo</h2>
+        <span class="label label-warning"><i class="fas fa-asterisk"></i> Campos obligatorios</span>
+        <hr />
         @if (ViewData.ModelState["RECEIP_ERROR"] != null) {
         <div class="alert alert-danger alert-dismissible" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -96,7 +96,7 @@
                         <div class="col-md-offset-2 col-md-10">
                             <input id = "saveData" type="button" value="Guardar Cambios" class="btn btn-success" />
                             @* <input id="agregarArticulo" type="button" value="Agregar" class="btn btn-info" /> *@
-                            <a id="agregarArticulo" class="btn btn-info">Agregar Articulo <span class="glyphicon glyphicon-upload"></span></a>
+                            <a id="agregarArticulo" class="btn btn-primary">Agregar Articulo <i class="fas fa-plus-square"></i></a>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,6 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script type="text/javascript">
-
     const claveEmpleado = document.getElementById("NoEmpleado")
     const nombre = document.getElementById("Nombre")
     const puesto = document.getElementById("Puesto")

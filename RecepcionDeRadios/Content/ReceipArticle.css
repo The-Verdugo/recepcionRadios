@@ -45,7 +45,7 @@
     }
 
 .article-preview {
-    background-color: #26415f;
+    background-color: #3b4b50;
     color: #fff;
     padding: 30px;
     max-width: 250px;
@@ -106,7 +106,7 @@
     }
 }
 .btn-article {
-    background-color: #26415f;
+    background-color: #26525f;
     border: 0;
     border-radius: 50px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
@@ -123,7 +123,7 @@ a:link, a:visited, a:active {
 }
 .btn-article:hover{
     color: #ffffff;
-    background-color: rgb(255, 147, 147);
+    background-color: rgb(253, 74, 74);
 }
 
 

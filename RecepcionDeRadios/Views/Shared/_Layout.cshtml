@@ -37,11 +37,14 @@
                 </ul>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="@Url.Action("logout", "Home")">Logout <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
-                        </li>
-                    </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a id="userbarname" href="@Url.Action("Edit", "User", new {id = @User.Identity.Name})">@HttpContext.Current.Session["User"].ToString() <i class="fas fa-user"></i></a> 
+                </li>
+                <li>
+                    <a href="@Url.Action("logout", "Home")">Logout <i class="fas fa-sign-out-alt"></i></a>
+                </li>
+            </ul>
                 }
                 else
                 {
@@ -60,6 +63,8 @@
         </footer>
     </div>
     @Scripts.Render("~/Scripts/cardsReceipArticle.js")
+    @Scripts.Render("~/Scripts/comments.js")
+    @Scripts.Render("~/Scripts/stacktable.js")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

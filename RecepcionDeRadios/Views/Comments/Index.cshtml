@@ -15,7 +15,16 @@
             @Html.DisplayNameFor(model => model.ReceipArticleDetail.ArticleID)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
         </th>
         <th></th>
     </tr>
@@ -26,7 +35,16 @@
             @Html.DisplayFor(modelItem => item.ReceipArticleDetail.ArticleID)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |

@@ -30,14 +30,13 @@ namespace RecepcionDeRadios.Controllers
             if (ModelState.IsValid)
             {
                 var UserExists = db.Users.Where(u => u.Username == usuario.User).FirstOrDefault();
-                var Name = (from c in db.Users select c.Name).First();
+                Session["User"] = usuario.User;
                 if (UserExists != null)
                 {
                     bool IsValidUser = BCrypt.Net.BCrypt.Verify(usuario.Password, UserExists?.Password);
 
                     if (IsValidUser)
                     {
-                        ViewBag.Name = Name;
                         FormsAuthentication.SetAuthCookie(UserExists.ID, false);
                         return RedirectToAction("create","receiparticle");
                     }
