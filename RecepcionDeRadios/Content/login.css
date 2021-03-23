@@ -7,7 +7,7 @@
 }
 
 .company__info {
-    background-color: #353a3b;
+    background-color: #1f3b41;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     display: flex;
@@ -79,7 +79,7 @@ form {
     transition: all .5s ease;
     width: 70%;
     border-radius: 30px;
-    color: #008080;
+    color: #232e2e;
     font-weight: 600;
     background-color: #fff;
     border: 1px solid #353a3b;
@@ -91,3 +91,4 @@ form {
         background-color: #353a3b;
         color: #fff;
     }
+

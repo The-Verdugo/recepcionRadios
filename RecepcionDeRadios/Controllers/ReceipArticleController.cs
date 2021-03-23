@@ -1,13 +1,12 @@
-﻿using System;
+﻿using RecepcionDeRadios.DAL;
+using RecepcionDeRadios.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using RecepcionDeRadios.DAL;
-using RecepcionDeRadios.Models;
 
 namespace RecepcionDeRadios.Controllers
 {
@@ -45,20 +44,78 @@ namespace RecepcionDeRadios.Controllers
         // POST: ReceipArticle/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public ActionResult Create([Bind(Include = "empleadoEntrega")] ReceipArticle receipArticle, FormCollection collection)
+        // {
+
+        //     if (ModelState.IsValid)
+        //     {
+        //         using (var dbContextTransaction = db.Database.BeginTransaction())
+        //         {
+        //             try
+        //             {
+        //                 ReceipArticle test = new ReceipArticle
+        //                 {
+        //                     fechaRecibido = DateTime.Now.Date,
+        //                     usuarioRecibe = User.Identity.Name,
+        //                     empleadoEntrega = receipArticle.empleadoEntrega,
+        //                     fechaEntregado = DateTime.Now.Date
+
+        //                 };
+
+        //                 db.ReceipArticles.Add(test);
+        //                 db.SaveChanges();
+        //                 ReceipArticleDetail receipArticleDetail = new ReceipArticleDetail
+        //                 {
+        //                     ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First(),
+        //                     ReportedFailure = collection["Falla"],
+        //                     ArticleID = collection["IdArticulo"]
+        //                 };
+        //                 db.ReceipArticleDetails.Add(receipArticleDetail);
+        //                 db.SaveChanges();
+        //                 dbContextTransaction.Commit();
+        //             }catch (Exception e){ ModelState.AddModelError("RECEIP_ERROR", e.Message); return View(); }
+        //         }
+        //         return RedirectToAction("Index");
+        //     }
+                   
+        //     ModelState.AddModelError("RECEIP_ERROR", "Please complete all fields");
+        //     return View(receipArticle);
+        // }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,usuarioRecibe,empleadoEntrega,fechaRecibido,fechaEntregado")] ReceipArticle receipArticle)
+        public JsonResult Create(ReceipArticle receip)
         {
-            if (ModelState.IsValid)
-            {
-                db.ReceipArticles.Add(receipArticle);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            bool estado = false;
+            
+            try
+                    {
+                        ReceipArticle test = new ReceipArticle
+                        {
+                            fechaRecibido = DateTime.Now.Date,
+                            usuarioRecibe = User.Identity.Name,
+                            fechaEntregado = DateTime.Now,
+                            empleadoEntrega = receip.empleadoEntrega
+                        };
+                        db.ReceipArticles.Add(test);
+                        db.SaveChanges();
+                        var ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First();
+                        // ReceipArticleDetail receipArticleDetail = new ReceipArticleDetail
+                        // {
+                        //     ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First()
+                        //     ArticleID 
+                        // };
+                        foreach (ReceipArticleDetail article in receip.ReceipArticleDetails){
+                            article.ReceipArticleID = ReceipArticleID;
+                            article.Status= 1;
+                            db.ReceipArticleDetails.Add(article);
+                        }
+                        db.SaveChanges();
+                        estado= true;
 
-            return View(receipArticle);
+                    }catch (Exception e){ ModelState.AddModelError("RECEIP_ERROR", e.Message); return new JsonResult { Data = new { estado } }; }
+            return new JsonResult { Data = new { estado } };
         }
-
         // GET: ReceipArticle/Edit/5
         public ActionResult Edit(int? id)
         {

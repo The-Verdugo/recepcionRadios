@@ -20,10 +20,8 @@
     height: 100%;
 }
 
-.courses-container {
-}
 
-.course {
+.article {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
@@ -34,26 +32,26 @@
     width: 700px;
 }
 
-    .course h6 {
+    .article h6 {
         opacity: 0.6;
         margin: 0;
         letter-spacing: 1px;
         text-transform: uppercase;
     }
 
-    .course h2 {
+    .article h2 {
         letter-spacing: 1px;
         margin: 10px 0;
     }
 
-.course-preview {
-    background-color: #2A265F;
+.article-preview {
+    background-color: #3b4b50;
     color: #fff;
     padding: 30px;
     max-width: 250px;
 }
 
-    .course-preview a {
+    .article-preview a {
         color: #fff;
         display: inline-block;
         font-size: 12px;
@@ -62,7 +60,7 @@
         text-decoration: none;
     }
 
-.course-info {
+.article-info {
     padding: 30px;
     position: relative;
     width: 100%;
@@ -99,9 +97,16 @@
     opacity: 0.6;
     letter-spacing: 1px;
 }
-
-.btn {
-    background-color: #2A265F;
+@media (max-width: 544px) { 
+    .btn-article{
+        width: 80px;
+        height: 40px;
+        font-size: 12px!important;
+        padding-left: 1.5rem!important;
+    }
+}
+.btn-article {
+    background-color: #26525f;
     border: 0;
     border-radius: 50px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
@@ -113,3 +118,12 @@
     right: 30px;
     letter-spacing: 1px;
 }
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+.btn-article:hover{
+    color: #ffffff;
+    background-color: rgb(253, 74, 74);
+}
+
+

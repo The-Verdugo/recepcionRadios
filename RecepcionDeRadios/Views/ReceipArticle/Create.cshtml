@@ -3,121 +3,119 @@
 @{
     ViewBag.Title = "Create";
 }
+
 @section Styles {
     <link href="@Url.Content("~/Content/ReceipArticle.css")" rel="stylesheet" type="text/css" />
 }
 
-<h2>Create</h2>
-<h4>ReceipArticle</h4>
-<hr />
-<div class="row ReceipArticle">
-    <div class="split left">
+<div class="container col-12">
+    <div class="col-md-7 col-sm-12" id="formReceipContainer">
+        <h2>Recepcion de Articulo</h2>
+        <span class="label label-warning"><i class="fas fa-asterisk"></i> Campos obligatorios</span>
+        <hr />
+        @if (ViewData.ModelState["RECEIP_ERROR"] != null) {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>@Html.ValidationMessage("RECEIP_ERROR")</strong>
+        </div>
+        }
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
+            <div class="form-horizontal" id="articleForm">
                 <div>
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="numeroColaborador">No Colaborador</label>
-                        <div class="col-md-10">
-                            <input class="form-control text-box single-line" id="NoEmpleado" name="usuarioRecibe" type="text" value="">
+                        <label class="control-label col-sm-2" for="numeroColaborador">* No Colaborador</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="NoEmpleado" name="empleadoEntrega" type="text" value="" >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Nombre">Nombre</label>
-                        <div class="col-md-10">
+                        <label class="control-label col-sm-2" for="Nombre">Nombre</label>
+                        <div class="col-sm-10">
                             <input class="form-control text-box single-line" id="Nombre" name="Nombre" type="text" value="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Puesto">Puesto</label>
-                        <div class="col-md-10">
+                        <label class="control-label col-sm-2" for="Puesto">Puesto</label>
+                        <div class="col-sm-10">
                             <input class="form-control text-box single-line" id="Puesto" name="Puesto" type="text" value="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Departamento">Departamento</label>
-                        <div class="col-md-10">
+                        <label class="control-label col-sm-2" for="Departamento">Departamento</label>
+                        <div class="col-sm-10">
                             <input class="form-control text-box single-line" id="Departamento" name="Departamento" type="text" value="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="IdArticulo">ID Articulo</label>
-                        <div class="col-md-10">
-                            <input class="form-control text-box single-line" id="IdArticulo" name="IdArticulo" type="text" value="">
+                        <label class="control-label col-sm-2" for="IdArticulo">* ID Articulo</label>
+                        <div class="col-sm-10">
+                            <input class="form-control text-box single-line" id="IdArticulo" name="IdArticulo" type="text" value="" >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Descripcion">Descripcion</label>
-                        <div class="col-md-10">
+                        <label class="control-label col-sm-2" for="Descripcion">Descripcion</label>
+                        <div class="col-sm-10">
                             <input class="form-control text-box single-line" id="Descripcion" name="Descripcion" type="text" value="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Marca">Marca</label>
-                        <div class="col-md-10">
+                        <label class="control-label col-sm-2" for="Marca">Marca</label>
+                        <div class="col-sm-10">
                             <input class="form-control text-box single-line" id="Marca" name="Marca" type="text" value="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Modelo">Modelo</label>
-                        <div class="col-md-10">
+                        <label class="control-label col-sm-2" for="Modelo">Modelo</label>
+                        <div class="col-sm-10">
                             <input class="form-control text-box single-line" id="Modelo" name="Modelo" type="text" value="">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2" for="Falla">Falla</label>
-                        <div class="col-md-10">
-                            <input class="form-control text-box single-line" id="Falla" name="Falla" type="text" value="">
+                        <label class="control-label col-sm-2" for="Falla">* Falla</label>
+                        <div class="col-sm-10">
+                            <input class="form-control text-box single-line" id="Falla" name="Falla" type="text" value="" >
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn-default" />
+                            <input id = "saveData" type="button" value="Guardar Cambios" class="btn btn-success" />
+                            @* <input id="agregarArticulo" type="button" value="Agregar" class="btn btn-info" /> *@
+                            <a id="agregarArticulo" class="btn btn-primary">Agregar Articulo <i class="fas fa-plus-square"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         }
     </div>
-    <div class="split right">
-        <div id="articles">
-            <h2>Articulos</h2>
-
-            <div class="courses-container">
-                <div class="course">
-                    <div class="course-preview">
-                        <h6>Article</h6>
-                        <h4>Radio Motorola</h4>
-                    </div>
-                    <div class="course-info">
-                        <h6>Estado</h6>
-                        <h4>Entregado a TI</h4>
-                        <button class="btn">Eliminar</button>
-                    </div>
-                </div>
-            </div>
+    <div class="col-md-5 col-sm-12">
+        <h2>Articulos Agregados</h2>
+        <div id="articles" class="col-md-12">
+            
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script type="text/javascript">
-
     const claveEmpleado = document.getElementById("NoEmpleado")
     const nombre = document.getElementById("Nombre")
     const puesto = document.getElementById("Puesto")
@@ -157,5 +155,6 @@
             })
             .catch((error) => console.error(error.message))
     }
+    
 </script>
 
