@@ -47,21 +47,43 @@ namespace RecepcionDeRadios.Controllers
         // POST: Comments/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public ActionResult Create([Bind(Include = "ID,ReceipArticleDetailID,Username,Subject,Content,fecha")] Comment comment)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         db.Comments.Add(comment);
+        //         db.SaveChanges();
+        //         return RedirectToAction("Index");
+        //     }
+
+        //     ViewBag.ReceipArticleDetailID = new SelectList(db.ReceipArticleDetails, "Id", "ArticleID", comment.ReceipArticleDetailID);
+        //     return View(comment);
+        // }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,ReceipArticleDetailID,Username,Subject,Content,fecha")] Comment comment)
+        public JsonResult Create(Comment comment)
         {
-            if (ModelState.IsValid)
+            bool estado = false;
+            
+            try
             {
-                db.Comments.Add(comment);
+                Comment comment1 = new Comment
+                {
+                    ReceipArticleDetailID = comment.ReceipArticleDetailID,
+                    Username = comment.Username,
+                    Subject = comment.Subject,
+                    Content = comment.Content,
+                    fecha = comment.fecha
+                };
+                db.Comments.Add(comment1);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                estado= true;
             }
-
-            ViewBag.ReceipArticleDetailID = new SelectList(db.ReceipArticleDetails, "Id", "ArticleID", comment.ReceipArticleDetailID);
-            return View(comment);
+            catch (Exception e){ ModelState.AddModelError("RECEIP_ERROR", e.Message); return new JsonResult { Data = new { estado } }; }
+            return new JsonResult { Data = new { estado } };
         }
-
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
         {

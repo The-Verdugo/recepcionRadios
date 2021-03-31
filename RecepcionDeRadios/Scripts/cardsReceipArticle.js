@@ -3,6 +3,7 @@ var i=0;//Contador para cargas individuales de elementos
 
 //Funcion para agregar tarjetas al Div de los articulos
 function addElemento(){
+  // Verifica los campos necesarios en el formulario
   if($('#IdArticulo').val().trim()=="" ){
     addAlertsError('El campo ID Articulo es obligatorio');
     document.getElementById("IdArticulo").focus();
@@ -11,6 +12,7 @@ function addElemento(){
     document.getElementById("Falla").focus();
   }else{
   var objeto = {
+    Descripcion: $('#Descripcion').val().trim(),
     ArticleID: $('#IdArticulo').val().trim(),
     ReportedFailure: $('#Falla').val().trim()
   }
@@ -38,8 +40,8 @@ function addAlertsError(text){
 }
 //Crea alertas Success en el DOM
 function addAlertsSuccess(text){
-  var cardAlert = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong></button></div>' 
-      $('#formReceipContainer').before(cardAlert);
+  var cardSuccess = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong></button></div>' 
+      $('#formReceipContainer').before(cardSuccess);
 }
 //Crea Alertas Success Con Boton en el DOM 
 function addAlertsSuccessBtn(text,btnText){
@@ -109,5 +111,3 @@ $(function() {
     i--;
   });
 });
-
-

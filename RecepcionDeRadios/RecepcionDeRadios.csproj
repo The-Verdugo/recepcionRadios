@@ -179,6 +179,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Comments.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\ReceipArticle.css" />
     <Content Include="Content\stacktable.css" />
@@ -188,6 +189,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\comments.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -316,7 +318,6 @@
     <Content Include="Views\ReceipArticle\Index.cshtml" />
     <Content Include="Views\ReceipArticleDetail\Create.cshtml" />
     <Content Include="Views\ReceipArticleDetail\Delete.cshtml" />
-    <Content Include="Views\ReceipArticleDetail\Edit.cshtml" />
     <Content Include="Views\ReceipArticleDetail\Index.cshtml" />
     <Content Include="Views\ReceipArticleDetail\Details.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -334,6 +335,7 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\ReceipArticleDetail\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

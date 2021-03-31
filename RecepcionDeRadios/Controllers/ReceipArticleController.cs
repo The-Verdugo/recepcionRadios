@@ -15,6 +15,7 @@ namespace RecepcionDeRadios.Controllers
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
 
         // GET: ReceipArticle
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.ReceipArticles.ToList());
@@ -106,6 +107,7 @@ namespace RecepcionDeRadios.Controllers
                         //     ArticleID 
                         // };
                         foreach (ReceipArticleDetail article in receip.ReceipArticleDetails){
+                            var des = article.Descripcion;
                             article.ReceipArticleID = ReceipArticleID;
                             article.Status= 1;
                             db.ReceipArticleDetails.Add(article);

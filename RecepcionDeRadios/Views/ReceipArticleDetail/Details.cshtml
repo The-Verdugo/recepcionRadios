@@ -43,14 +43,42 @@
             </dd>
         </div>
         <div class="col-md-12 col-lg-12">
-            <a href="javascript:history.back();" class="btn btn-default"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> |
-            <a href="@Url.Action("Edit",new { id = Model.Id })" class="btn btn-warning">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+            <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> |
+            <a href="@Url.Action("Edit",new { id = Model.Id })" class="btn btn-warning btnsmall">Editar <span class="glyphicon glyphicon-pencil"></span></a> |
+            <a id="btnCreateComment" class="btn btn-primary btnsmall">Comentar <i class="fas fa-comment"></i></a>
+        </div>
+        <div id="FormComment" class="col-md-12 col-lg-12" style="display: none;">
+            <h3>Nuevo Comentario</h3>
+            <div class="well col-lg-12">
+                <div class="form-group col-lg-6">
+                    <input id="IdHidden" name="IdHidden" type="hidden" value='@ViewBag.IdArticle'>
+                    <label for="commentFormSubject">Asunto*</label>
+                    <input type="text" class="form-control" id="commentFormSubject" placeholder="Asunto del comentario">
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="commentFormText">Comentario*</label>
+                    <textarea type="text" class="form-control text-box multi-line" id="commentFormText" placeholder="Escribe tu comentario aqui"></textarea>
+                </div>
+                <div class="form-group col-lg-6">
+                    <input id="UserHidden" name="UserHidden" type="hidden" value="@HttpContext.Current.Session["User"].ToString()">
+                    <label for="commentFormUser">Usuario</label>
+                    <input type="textarea" class="form-control" id="commentFormUser"  readonly>
+                </div>
+                <div class="form-group col-lg-6">
+                    <input id="FechaHidden" name="FechaHidden" type="hidden" value="@DateTime.Now">
+                    <label for="commentFormDate">Fecha</label>
+                    <input type="textarea" class="form-control" id="commentFormDate"  readonly>
+                </div>
+                <div class="form-group col-lg-6">
+                    <button class="btn btn-success btnsmall" id="commentFormBtnSave">Agregar <i class="fas fa-comment-medical"></i></button>
+                </div>
+            </div>
         </div>
     </dl>
     <div class="col-md-6 col-lg-6 col-sm-12">
         <h3>Comentarios</h3>
         <hr />
-        <ul id="comment-list" class="comment-list">
+        <ul id="comment-list" class="comment-list col-sm-12">
         @foreach (var comment in Model.Comments){
             <li>
                 <div class="comment-box">

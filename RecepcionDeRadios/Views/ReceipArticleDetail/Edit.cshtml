@@ -17,15 +17,15 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ReceipArticleID,"Folio Recepcion", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ReceipArticleID, "ReceipArticleID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ReceipArticleID",null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ReceipArticleID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ReceipArticleID, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ArticleID,"Codigo del articulo", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ArticleID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ArticleID, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ArticleID, "", new { @class = "text-danger" })
@@ -33,21 +33,44 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Status,"Estatus", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReportedFailure, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReportedFailure, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReportedFailure, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="Status" name="Status" class="form-control">
+                    <option value="1">Recibido</option>
+                    <option value="2">Entregado al proveedor</option>
+                    <option value="3">Reparado</option>
+                    <option value="4">Baja</option>
+                    <option value="5">Entregado al Usuario</option>
+                </select>
+
                 @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    <a href="javascript:history.back();" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+    @Html.ActionLink("Back to List", "Index")
 </div>

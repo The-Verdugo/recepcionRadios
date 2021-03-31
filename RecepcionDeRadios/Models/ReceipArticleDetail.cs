@@ -18,6 +18,9 @@ namespace RecepcionDeRadios.Models
         [DisplayName("Id del Articulo")]
         public string ArticleID { get; set; }
         [Required]
+        [DisplayName("Descripcion")]
+        public string Descripcion { get; set; }
+        [Required]
         [DisplayName("Falla")]
         public string ReportedFailure { get; set; }
         [DisplayName("Estatus")]
