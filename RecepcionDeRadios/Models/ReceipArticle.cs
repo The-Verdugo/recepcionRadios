@@ -13,13 +13,18 @@ namespace RecepcionDeRadios.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+        [DisplayName("Usuario que recibe")]
         public string usuarioRecibe { get; set; }
+        [DisplayName("Usuario que entrega")]
         public string usuarioEntrega { get; set; }
         [Required]
-        [DisplayName("Empleado que entrega")]
+        [DisplayName("Colaborador que entrega")]
         public string empleadoEntrega { get; set; }
+        [DisplayName("Colaborador que recibe")]
         public string empleadoRecibe { get; set; }
+        [DisplayName("Fecha de recepción")]
         public DateTime fechaRecibido { get; set; }
+        [DisplayName("Fecha de entrega")]
         public DateTime fechaEntregado { get; set; }
         public virtual ICollection<ReceipArticleDetail> ReceipArticleDetails { get; set; }
     }

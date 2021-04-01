@@ -46,6 +46,7 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .lbl-comments{
     background-color: rgb(172, 172, 172);
     font-size: 11px;
@@ -68,3 +69,53 @@
         margin-left: 40%;
     }
   }
+
+/* Estatus en l vista de detalles */
+.lbl-recibidoD{
+    background-color: rgb(240, 128, 63);
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}
+.lbl-entregadoPD{
+    background-color: rgb(50, 156, 182);
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}
+.lbl-reparadoD{
+    background-color: rgb(65, 114, 0);
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}
+.lbl-bajaD{
+    background-color: rgb(212, 56, 56);
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}
+.lbl-entregadoUD{
+    background-color: rgb(43, 185, 14);
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}
+.lbl-noneD{
+    background-color: rgb(122, 122, 122);
+    font-size: 13px;
+    color: white;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0px 4px 0px 4px;
+}

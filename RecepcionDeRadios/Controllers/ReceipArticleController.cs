@@ -33,6 +33,7 @@ namespace RecepcionDeRadios.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.USER = db.Users.Single(b => b.ID == receipArticle.usuarioRecibe);
             return View(receipArticle);
         }
 
@@ -93,7 +94,7 @@ namespace RecepcionDeRadios.Controllers
                     {
                         ReceipArticle test = new ReceipArticle
                         {
-                            fechaRecibido = DateTime.Now.Date,
+                            fechaRecibido = DateTime.Now,
                             usuarioRecibe = User.Identity.Name,
                             fechaEntregado = DateTime.Now,
                             empleadoEntrega = receip.empleadoEntrega

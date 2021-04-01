@@ -1,6 +1,7 @@
 ﻿@model RecepcionDeRadios.Models.ReceipArticleDetail
 @section Styles {
     <link href="@Url.Content("~/Content/Comments.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estatus.css")" rel="stylesheet" type="text/css" />
 }
 <div class="container">
     <dl class="col-md-6 col-lg-6 col-sm-12">
@@ -29,17 +30,39 @@
                 @Html.DisplayNameFor(model => model.Status)
             </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Status)
-            </dd>
+                @switch (Model.Status)
+                {
+                    case 1:<dd class="lbl-recibidoD">Recibido <i class="fas fa-clipboard-check"></i></dd>;
+                        break;
+                    case 2:<dd class="lbl-entregadoPD">Entregado al proveedor <i class="fas fa-clock"></i></dd>;
+                        break;
+                    case 3:<dd class="lbl-reparadoD">Reparado <i class="far fa-check-square"></i></dd>;
+                        break;
+                    case 4:<dd class="lbl-bajaD">Baja <i class="fas fa-window-close"></i></dd>;
+                        break;
+                    case 5:<dd class="lbl-entregadoUD">Entregado a usuario <i class="fas fa-check-square"></i></dd>;
+                        break;
+                    default:<dd class="lbl-noneD">Estatus no disponible <i class="far fa-circle"></i></dd>;
+                        break;
+                }
+                
         </div>
-        <div class="panel panel-default col-lg-12"> 
+        <div class="panel panel-default col-lg-6"> 
             <dt>
                 @Html.DisplayNameFor(model => model.ReportedFailure)
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.ReportedFailure)
+            </dd>
+        </div>
+        <div class="panel panel-default col-lg-6"> 
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
             </dd>
         </div>
         <div class="col-md-12 col-lg-12">

@@ -71,6 +71,7 @@ namespace RecepcionDeRadios.Controllers
         }
 
         // GET: ReceipArticleDetail/Edit/5
+        [Authorize(Roles = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,6 +83,7 @@ namespace RecepcionDeRadios.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.BOOL = false;
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);
         }
@@ -93,11 +95,13 @@ namespace RecepcionDeRadios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status,ReportedFailure,Descripcion")] ReceipArticleDetail receipArticleDetail)
         {
+            ViewBag.BOOL = false;
             if (ModelState.IsValid)
             {
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.BOOL = true;
+                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.ReceipArticleID });
             }
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);

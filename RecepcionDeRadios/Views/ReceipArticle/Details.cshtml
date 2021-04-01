@@ -18,7 +18,7 @@
                     @Html.DisplayNameFor(model => model.usuarioRecibe)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.usuarioRecibe)
+                    @ViewBag.USER.Username
                 </dd>
             </div>
         </div>
@@ -42,13 +42,21 @@
             <dt>
                 @Html.DisplayNameFor(model => model.fechaEntregado)
             </dt>
-            <dd>
-                @Html.DisplayFor(model => model.fechaEntregado)
-            </dd>
+            
+                @if (Model.fechaEntregado == Model.fechaRecibido)
+                {
+                    <dd>Aún no ha sido entregado</dd>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.fechaEntregado)</dd>
+                }
+
+        
         </div>
         <div class="col-md-12 col-lg-12">
             <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a> |
-            <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+            <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar Recepción <span class="glyphicon glyphicon-pencil"></span></a>
         </div>
     </div>
 
@@ -84,7 +92,7 @@
                             default:<label class="lbl-none">Estatus no disponible <i class="far fa-circle"></i></label><br /> <br />;
                                 break;
                         }
-                        @Html.ActionLink("Actualizar Estatus", "Edit", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                        @Html.ActionLink("Actualizar Estatus", "Edit", "ReceipArticleDetail", new { id = item.Id, st = true }, new { @class = "btn btn-warning btn-xs" })
                         @Html.ActionLink("Más Información", "Details", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-info btn-xs" })
                         @Html.ActionLink("Eliminar", "Delete", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
                     </div>
