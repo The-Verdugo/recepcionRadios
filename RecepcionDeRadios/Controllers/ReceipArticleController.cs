@@ -15,9 +15,48 @@ namespace RecepcionDeRadios.Controllers
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
 
         // GET: ReceipArticle
+        [Authorize]
         public ActionResult Index()
         {
+            ViewBag.All = true;
             return View(db.ReceipArticles.ToList());
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> Index(string dato,int criterio)
+        {
+            switch (criterio)
+            {
+                case 1: if (String.IsNullOrEmpty(dato))
+                        {
+                            ViewBag.All = true;
+                            return View(await db.ReceipArticles.ToListAsync());
+                        }
+                        else
+                        {
+                            ViewBag.All = false;
+                            ViewBag.Colab = dato;
+                            return View(await db.ReceipArticles.Where(c => c.ID.ToString().Contains(dato)).ToListAsync());
+                        }
+                case 2:
+                        if (String.IsNullOrEmpty(dato))
+                        {
+                            ViewBag.All = true;
+                            return View(await db.ReceipArticles.ToListAsync());
+                        }
+                        else
+                        {
+                            ViewBag.All = false;
+                            ViewBag.Colab = dato;
+
+                            return View(await db.ReceipArticles.Where(c => c.empleadoEntrega.ToLower().Contains(dato)).ToListAsync());
+                        }
+                default: return View(await db.ReceipArticles.ToListAsync());
+            }
+            
+            
         }
 
         // GET: ReceipArticle/Details/5
@@ -32,12 +71,15 @@ namespace RecepcionDeRadios.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.USER = db.Users.Single(b => b.ID == receipArticle.usuarioRecibe);
             return View(receipArticle);
         }
 
         // GET: ReceipArticle/Create
         public ActionResult Create()
         {
+            ViewBag.URLEmpl = Environment.GetEnvironmentVariable("URLEMPLEADOS");
+            ViewBag.URLArt = Environment.GetEnvironmentVariable("URLARTICULOS");
             return View();
         }
 
@@ -92,7 +134,7 @@ namespace RecepcionDeRadios.Controllers
                     {
                         ReceipArticle test = new ReceipArticle
                         {
-                            fechaRecibido = DateTime.Now.Date,
+                            fechaRecibido = DateTime.Now,
                             usuarioRecibe = User.Identity.Name,
                             fechaEntregado = DateTime.Now,
                             empleadoEntrega = receip.empleadoEntrega
@@ -106,6 +148,7 @@ namespace RecepcionDeRadios.Controllers
                         //     ArticleID 
                         // };
                         foreach (ReceipArticleDetail article in receip.ReceipArticleDetails){
+                            var des = article.Descripcion;
                             article.ReceipArticleID = ReceipArticleID;
                             article.Status= 1;
                             db.ReceipArticleDetails.Add(article);

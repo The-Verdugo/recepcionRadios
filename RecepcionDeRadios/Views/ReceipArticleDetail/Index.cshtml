@@ -9,10 +9,10 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ReceipArticle.ID)
+            @Html.DisplayNameFor(model => model.Descripcion)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ArticleID)
@@ -23,10 +23,10 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach ( var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ReceipArticle.usuarioRecibe)
+            @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ArticleID)
@@ -43,3 +43,7 @@
 }
 
 </table>
+
+<script type="text/javascript">
+
+</script>

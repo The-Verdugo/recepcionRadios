@@ -3,51 +3,136 @@
 @{
     ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
-
+@section Styles {
+    <link href="@Url.Content("~/Content/Comments.css")" rel="stylesheet" type="text/css" />
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ReceipArticleDetail</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<div class="container-fluid">
+<div class="col-lg-6">
+    <h2>Editar Estatus</h2>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ReceipArticleID)
+    @Html.HiddenFor(model => model.ArticleID)
+    @Html.HiddenFor(model => model.Descripcion)
+    @Html.HiddenFor(model => model.ReportedFailure)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReceipArticleID,"Folio Recepcion", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ReceipArticleID",null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ReceipArticleID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ArticleID,"Codigo del articulo", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ArticleID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ArticleID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status,"Estatus", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success" />
-            </div>
+    <div class="form-group col-lg-12">
+        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-lg-12">
+            <select id="Status" name="Status" class="form-control">
+                @if (Model.Status == 1)
+                {
+                    <option value="1" selected>Recibido</option>
+                    <option value="2">Entregado al proveedor</option>
+                    <option value="3">Reparado</option>
+                    <option value="4">Baja</option>
+                    <option value="5">Entregado al Usuario</option>
+                }
+                else if (Model.Status == 2)
+                {
+                    <option value="1">Recibido</option>
+                    <option value="2" selected>Entregado al proveedor</option>
+                    <option value="3">Reparado</option>
+                    <option value="4">Baja</option>
+                    <option value="5">Entregado al Usuario</option>
+                }
+                else if (Model.Status == 3)
+                {
+                    <option value="1">Recibido</option>
+                    <option value="2">Entregado al proveedor</option>
+                    <option value="3" selected>Reparado</option>
+                    <option value="4">Baja</option>
+                    <option value="5">Entregado al Usuario</option>
+                }
+                else if (Model.Status == 4)
+                {
+                    <option value="1">Recibido</option>
+                    <option value="2">Entregado al proveedor</option>
+                    <option value="3">Reparado</option>
+                    <option value="4" selected>Baja</option>
+                    <option value="5">Entregado al Usuario</option>
+                }
+                else if (Model.Status == 5)
+                {
+                    <option value="1">Recibido</option>
+                    <option value="2">Entregado al proveedor</option>
+                    <option value="3">Reparado</option>
+                    <option value="4">Baja</option>
+                    <option value="5" selected>Entregado al Usuario</option>
+                }
+            </select>
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group col-lg-12">
+        <div class="col-lg-12">
+            @if (ViewBag.BOOL)
+            {
+                <a href="javascript:window.history.go(-2);" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> 
+            }
+            else
+            {
+                <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+            }
+            <input type="submit" value="Guardar" class="btn btn-success" />
+            <a id="btnCreateComment" class="btn btn-primary btnsmall">Comentar <i class="fas fa-comment"></i></a>
+        </div>
+    </div>
+    <div id="FormComment" class="col-md-12 col-lg-12" style="display: none;">
+            <h3>Nuevo Comentario</h3>
+            <div class="well col-lg-12">
+                <div class="form-group col-lg-6">
+                    <input id="IdHidden" name="IdHidden" type="hidden" value='@Model.Id'>
+                    <label for="commentFormSubject">Asunto*</label>
+                    <input type="text" class="form-control" id="commentFormSubject" placeholder="Asunto del comentario">
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="commentFormText">Comentario*</label>
+                    <textarea type="text" class="form-control text-box multi-line" id="commentFormText" placeholder="Escribe tu comentario aqui"></textarea>
+                </div>
+                <div class="form-group col-lg-6">
+                    <input id="UserHidden" name="UserHidden" type="hidden" value="@HttpContext.Current.Session["User"].ToString()">
+                    <label for="commentFormUser">Usuario</label>
+                    <input type="textarea" class="form-control" id="commentFormUser"  readonly>
+                </div>
+                <div class="form-group col-lg-6">
+                    <input id="FechaHidden" name="FechaHidden" type="hidden" value="@DateTime.Now">
+                    <label for="commentFormDate">Fecha</label>
+                    <input type="textarea" class="form-control" id="commentFormDate"  readonly>
+                </div>
+                <div class="form-group col-lg-6">
+                    <button class="btn btn-success btnsmall" id="commentFormBtnSave">Agregar <i class="fas fa-comment-medical"></i></button>
+                </div>
+            </div>
+    </div>
+</div>
+<div class="col-lg-6">
+    <h2>Comentarios</h2>
+    <hr />
+    <ul id="comment-list" class="comment-list col-sm-12">
+        @foreach (var comment in Model.Comments){
+            <li>
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <dt class="comment-name">@Html.DisplayFor(modelItem => comment.Username)</dt>
+                        <span class="comment-label">Comentó</span>
+                        <span class="comment-subject">@Html.DisplayFor(modelItem => comment.Subject)</span>
+                    </div>
+                    <div class="comment-content">
+                        <dd>@Html.DisplayFor(modelItem => comment.Content)</dd>
+                        <span class="comment-label">@Html.DisplayFor(modelItem => comment.fecha)</span>
+                    </div>
+                </div>
+            </li>
+        }
+        </ul>
+</div>
+</div>
 }
 
-<div>
-    <a href="javascript:history.back();" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
-</div>
+
