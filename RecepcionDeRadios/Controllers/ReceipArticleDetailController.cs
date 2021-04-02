@@ -18,7 +18,7 @@ namespace RecepcionDeRadios.Controllers
     public class ReceipArticleDetailController : Controller
     {
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
-        string BaseUrl = "http://10.23.20.40:8080/api/articulos/";
+
         // GET: ReceipArticleDetail
         public ActionResult Index()
         {
@@ -91,6 +91,7 @@ namespace RecepcionDeRadios.Controllers
         // POST: ReceipArticleDetail/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador ,Tecnico")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status,ReportedFailure,Descripcion")] ReceipArticleDetail receipArticleDetail)
@@ -101,7 +102,7 @@ namespace RecepcionDeRadios.Controllers
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.BOOL = true;
-                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.Id});
+                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.ReceipArticleID });
             }
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);

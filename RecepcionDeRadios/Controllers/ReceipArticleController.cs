@@ -148,7 +148,7 @@ namespace RecepcionDeRadios.Controllers
                         //     ArticleID 
                         // };
                         foreach (ReceipArticleDetail article in receip.ReceipArticleDetails){
-                            var des = article.Descripcion;
+                            var des = article.Description;
                             article.ReceipArticleID = ReceipArticleID;
                             article.Status= 1;
                             db.ReceipArticleDetails.Add(article);
@@ -191,6 +191,7 @@ namespace RecepcionDeRadios.Controllers
         }
 
         // GET: ReceipArticle/Delete/5
+        [Authorize(Roles ="Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -206,6 +207,7 @@ namespace RecepcionDeRadios.Controllers
         }
 
         // POST: ReceipArticle/Delete/5
+        [Authorize(Roles ="Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
