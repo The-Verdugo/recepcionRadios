@@ -18,7 +18,7 @@ namespace RecepcionDeRadios.Controllers
     public class ReceipArticleDetailController : Controller
     {
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
-
+        string BaseUrl = "http://10.23.20.40:8080/api/articulos/";
         // GET: ReceipArticleDetail
         public ActionResult Index()
         {
@@ -102,7 +102,8 @@ namespace RecepcionDeRadios.Controllers
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.BOOL = true;
-                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.ReceipArticleID });
+
+                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.Id});
             }
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);
