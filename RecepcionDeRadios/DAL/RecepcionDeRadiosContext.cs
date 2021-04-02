@@ -13,7 +13,7 @@ namespace RecepcionDeRadios.DAL
         private const string secretKey = Crypto.Crypto.KEY;
         public RecepcionDeRadiosContext() : base(Crypto.Crypto.SimpleDecryptWithPassword(Environment.GetEnvironmentVariable("SISRADIOS"), secretKey))
         {
-
+            
         }
         //public DbSet<Seller> Sellers { get; set; }
         //public DbSet<Ride> Rides { get; set; }

@@ -71,7 +71,7 @@ namespace RecepcionDeRadios.Controllers
         }
 
         // GET: ReceipArticleDetail/Edit/5
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador ,Tecnico")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -101,7 +101,7 @@ namespace RecepcionDeRadios.Controllers
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.BOOL = true;
-                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.ReceipArticleID });
+                return RedirectToAction("Details","ReceipArticleDetail", new { id=receipArticleDetail.Id});
             }
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);

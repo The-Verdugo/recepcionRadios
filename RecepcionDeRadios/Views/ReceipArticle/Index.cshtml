@@ -3,16 +3,43 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Listado de recepción de articulos</h2>
-
-<p>
-    <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
-</p>
+@using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <h2>Listado de recepción de articulos</h2>
+    <div class="form-group form-inline">
+        <div class="col-lg-5 col-md-5 col-xs-5">
+            <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+        </div>
+        <div class="col-lg-7 col-md-7 col-xs-7">
+            <p>
+            @if (ViewBag.All)
+            {
+                <select id="criterio" name="criterio" class="form-control">
+                    <option value="1" selected>Folio</option>
+                    <option value="2">No de Colaborador</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Busqueda" name="dato" id="dato" value='@ViewBag.Colab' />
+                <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button> 
+            }else{
+                <a href="@Url.Action("Index")" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Recargar Todo"><i class="fas fa-sync-alt"></i></a>
+                <select id="criterio" name="criterio" class="form-control">
+                    <option value="1" selected>Folio</option>
+                    <option value="2">No de Colaborador</option>
+                </select>
+                <input type="text" class="form-control" placeholder="Busqueda por Colaborador" name="dato" id="dato" value='@ViewBag.Colab' />
+                <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button> 
+            }
+            </p>
+        </div>
+    </div>
 <table id="tableReceip" class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.usuarioRecibe)
+            Folio
+        </th>
+        <th>
+            Articulos Recibidos
         </th>
         <th>
             @Html.DisplayNameFor(model => model.empleadoEntrega)
@@ -28,8 +55,11 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>#
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
         <td>
-            @Html.DisplayFor(modelItem => item.usuarioRecibe)
+            <span class="badge">@item.ReceipArticleDetails.Count</span>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.empleadoEntrega)
@@ -50,3 +80,9 @@
 
 </table>
 
+    }
+<script type="text/javascript">
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>

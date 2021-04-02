@@ -27,7 +27,6 @@
                 @if (Model.Status == 1)
                 {
                     <option value="1" selected>Recibido</option>
-                    <option value="1">Recibido</option>
                     <option value="2">Entregado al proveedor</option>
                     <option value="3">Reparado</option>
                     <option value="4">Baja</option>
@@ -88,7 +87,7 @@
             <h3>Nuevo Comentario</h3>
             <div class="well col-lg-12">
                 <div class="form-group col-lg-6">
-                    <input id="IdHidden" name="IdHidden" type="hidden" value='@Model.ReceipArticleID'>
+                    <input id="IdHidden" name="IdHidden" type="hidden" value='@Model.Id'>
                     <label for="commentFormSubject">Asunto*</label>
                     <input type="text" class="form-control" id="commentFormSubject" placeholder="Asunto del comentario">
                 </div>
