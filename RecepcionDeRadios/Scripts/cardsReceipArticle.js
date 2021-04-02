@@ -72,11 +72,11 @@ $(function() {
         data: JSON.stringify(receiparticle),
     
         contentType: 'application/json',
-        success: function (data,id) { //Respuesta afirmativa desde el controlador
+        success: function (data) { //Respuesta afirmativa desde el controlador
             if (data.estado) {//Comprobacion de que los datos fueron agregados
                 addAlertsSuccess("Articulo Agregado Correctamente");
                 // alert('Articulo agregado correctamente');
-                location.href = "/receiparticle/index/" + id;
+                location.href = "/receiparticle/index/";
             }
             else {//Error al agregar los datos
                 addAlertsError("El Número de colaborador es obligatorio");
