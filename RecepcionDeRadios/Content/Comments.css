@@ -45,6 +45,7 @@ ul{
     margin: auto;
     margin-left: 10px;
     margin-right: 0;
+    cursor: pointer;
 }
 @media screen and (max-width: 767px) {
   .comment-label{

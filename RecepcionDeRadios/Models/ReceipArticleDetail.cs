@@ -19,7 +19,7 @@ namespace RecepcionDeRadios.Models
         public string ArticleID { get; set; }
         [Required]
         [DisplayName("Descripcion")]
-        public string Descripcion { get; set; }
+        public string Description { get; set; }
         [Required]
         [DisplayName("Falla")]
         public string ReportedFailure { get; set; }
