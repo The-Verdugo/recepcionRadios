@@ -10,7 +10,7 @@
 
 <div class="container col-12">
     <div class="col-md-7 col-sm-12" id="formReceipContainer">
-        <h2>Recepcion de Articulo</h2>
+        <h2>Recepcion de Artículos</h2>
         <span class="label label-warning"><i class="fas fa-asterisk"></i> Campos obligatorios</span>
         <hr />
         @if (ViewData.ModelState["RECEIP_ERROR"] != null) {
@@ -40,7 +40,10 @@
                         <label class="control-label col-sm-2" for="Nombre">Nombre</label>
                         <div class="col-sm-10">
 
-                            <input class="form-control text-box single-line" id="Nombre" name="Nombre" type="text" value="" readOnly="readonly">
+
+                            <input class="form-control text-box single-line" id="Nombre" name="Nombre" type="text" value="" readonly>
+
+
                         </div>
                     </div>
 
@@ -48,7 +51,11 @@
                         <label class="control-label col-sm-2" for="Puesto">Puesto</label>
                         <div class="col-sm-10">
 
-                            <input class="form-control text-box single-line" id="Puesto" name="Puesto" type="text" value="" readOnly="readonly">
+
+
+                            <input class="form-control text-box single-line" id="Puesto" name="Puesto" type="text" value="" readonly>
+
+
 
                         </div>
                     </div>
@@ -57,7 +64,9 @@
                         <label class="control-label col-sm-2" for="Departamento">Departamento</label>
                         <div class="col-sm-10">
 
-                            <input class="form-control text-box single-line" id="Departamento" name="Departamento" type="text" value="" readOnly="readonly">
+
+                            <input class="form-control text-box single-line" id="Departamento" name="Departamento" type="text" value="" readonly>
+
 
                         </div>
                     </div>
@@ -73,7 +82,11 @@
                         <label class="control-label col-sm-2" for="Descripcion">Descripcion</label>
                         <div class="col-sm-10">
 
-                            <input class="form-control text-box single-line" id="Descripcion" name="Descripcion" type="text" value="" readOnly="readonly">
+
+
+                            <input class="form-control text-box single-line" id="Descripcion" name="Descripcion" type="text" value="" readonly>
+
+
 
                         </div>
                     </div>
@@ -82,7 +95,11 @@
                         <label class="control-label col-sm-2" for="Marca">Marca</label>
                         <div class="col-sm-10">
 
-                            <input class="form-control text-box single-line" id="Marca" name="Marca" type="text" value="" readOnly="readonly">
+
+
+                            <input class="form-control text-box single-line" id="Marca" name="Marca" type="text" value="" readonly>
+
+
 
                         </div>
                     </div>
@@ -91,7 +108,9 @@
                         <label class="control-label col-sm-2" for="Modelo">Modelo</label>
                         <div class="col-sm-10">
 
-                            <input class="form-control text-box single-line" id="Modelo" name="Modelo" type="text" value="" readOnly="readonly">
+
+                            <input class="form-control text-box single-line" id="Modelo" name="Modelo" type="text" value="" readonly>
+
 
                         </div>
                     </div>
@@ -106,7 +125,6 @@
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <input id = "saveData" type="button" value="Guardar Cambios" class="btn btn-success" />
-                            @* <input id="agregarArticulo" type="button" value="Agregar" class="btn btn-info" /> *@
                             <a id="agregarArticulo" class="btn btn-primary">Agregar Articulo <i class="fas fa-plus-square"></i></a>
                         </div>
                     </div>
@@ -145,7 +163,9 @@
 
     function getEmployeeData() {
         let clave = claveEmpleado.value
-        fetch(`http://10.23.20.40:8080/api/empleados/oth/${clave}`)
+        let urlEmpl = '@ViewBag.URLEmpl'
+        let ur = urlEmpl+clave
+        fetch(urlEmpl + clave)
             .then(response => response.json())
             .then(data => {
                 nombre.value = `${data.Nombre} ${data.Apellidos}`
@@ -157,7 +177,8 @@
 
     function getArticleData() {
         let id = IdArticulo.value
-        fetch(`http://10.23.20.40:8080/api/articulos/${id}`)
+        let urlArt = '@ViewBag.URLArt'
+        fetch(urlArt + id)
             .then(response => response.json())
             .then(data => {
                 descripcion.value = data.Descripcion
@@ -166,6 +187,6 @@
             })
             .catch((error) => console.error(error.message))
     }
-    
+
 </script>
 

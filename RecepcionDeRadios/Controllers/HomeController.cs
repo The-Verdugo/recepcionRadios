@@ -29,8 +29,9 @@ namespace RecepcionDeRadios.Controllers
         {
             if (ModelState.IsValid)
             {
-                var UserExists = db.Users.Where(u => u.Username == usuario.User).FirstOrDefault();
+                var UserExists = db.Users.Where(u => u.Username == usuario.User).FirstOrDefault();             
                 Session["User"] = usuario.User;
+                Session.Timeout = 50;
                 if (UserExists != null)
                 {
                     bool IsValidUser = BCrypt.Net.BCrypt.Verify(usuario.Password, UserExists?.Password);
@@ -48,6 +49,7 @@ namespace RecepcionDeRadios.Controllers
 
         public void Logout()
         {
+            Session.Abandon();
             FormsAuthentication.SignOut();
             FormsAuthentication.RedirectToLoginPage();
             //return View();

@@ -1,5 +1,6 @@
 ﻿using RecepcionDeRadios.DAL;
 using RecepcionDeRadios.Models;
+using Rotativa.Options;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,11 +16,52 @@ namespace RecepcionDeRadios.Controllers
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
 
         // GET: ReceipArticle
+        [Authorize]
         public ActionResult Index()
         {
+            ViewBag.All = true;
             return View(db.ReceipArticles.ToList());
         }
 
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> Index(string dato,int criterio)
+        {
+            switch (criterio)
+            {
+                case 1: if (String.IsNullOrEmpty(dato))
+                        {
+                            ViewBag.All = true;
+                            return View(await db.ReceipArticles.ToListAsync());
+                        }
+                        else
+                        {
+                            ViewBag.All = false;
+                            ViewBag.Colab = dato;
+                            ViewBag.Find = true;
+                            return View(await db.ReceipArticles.Where(c => c.ID.ToString().Contains(dato)).ToListAsync());
+                        }
+                case 2:
+                        if (String.IsNullOrEmpty(dato))
+                        {
+                            ViewBag.All = true;
+                            return View(await db.ReceipArticles.ToListAsync());
+                        }
+                        else
+                        {
+                            ViewBag.Find = false;
+                            ViewBag.All = false;
+                            ViewBag.Colab = dato;
+
+                            return View(await db.ReceipArticles.Where(c => c.empleadoEntrega.ToLower().Contains(dato)).ToListAsync());
+                        }
+                default: return View(await db.ReceipArticles.ToListAsync());
+            }
+            
+            
+        }
+        [Authorize]
         // GET: ReceipArticle/Details/5
         public ActionResult Details(int? id)
         {
@@ -32,12 +74,36 @@ namespace RecepcionDeRadios.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.USER = db.Users.Single(b => b.ID == receipArticle.usuarioRecibe);
             return View(receipArticle);
         }
+        public ActionResult Print(int? id) {
+            ViewBag.Print = true;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ReceipArticle receipArticle = db.ReceipArticles.Find(id);
+            if (receipArticle == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.USER = db.Users.Single(b => b.ID == receipArticle.usuarioRecibe);
+            return new Rotativa.ActionAsPdf("PrintView", receipArticle) {
+                PageMargins = new Margins(0, 0, 0, 0),
+                PageSize = Size.B7,
+                PageWidth = 70,
+                PageHeight = 297,
+                FileName = "Recepción #"+ receipArticle.ID +".pdf"
 
+            };
+        }
         // GET: ReceipArticle/Create
+        [Authorize]
         public ActionResult Create()
         {
+            ViewBag.URLEmpl = Environment.GetEnvironmentVariable("URLEMPLEADOS");
+            ViewBag.URLArt = Environment.GetEnvironmentVariable("URLARTICULOS");
             return View();
         }
 
@@ -87,19 +153,19 @@ namespace RecepcionDeRadios.Controllers
         public JsonResult Create(ReceipArticle receip)
         {
             bool estado = false;
-            
+            var ReceipArticleID = 0;
             try
                     {
                         ReceipArticle test = new ReceipArticle
                         {
-                            fechaRecibido = DateTime.Now.Date,
+                            fechaRecibido = DateTime.Now,
                             usuarioRecibe = User.Identity.Name,
                             fechaEntregado = DateTime.Now,
                             empleadoEntrega = receip.empleadoEntrega
                         };
                         db.ReceipArticles.Add(test);
                         db.SaveChanges();
-                        var ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First();
+                        ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First();
                         // ReceipArticleDetail receipArticleDetail = new ReceipArticleDetail
                         // {
                         //     ReceipArticleID = (from c in db.ReceipArticles orderby c.ID descending select c.ID).First()
@@ -113,8 +179,9 @@ namespace RecepcionDeRadios.Controllers
                         db.SaveChanges();
                         estado= true;
 
-                    }catch (Exception e){ ModelState.AddModelError("RECEIP_ERROR", e.Message); return new JsonResult { Data = new { estado } }; }
-            return new JsonResult { Data = new { estado } };
+            }
+            catch (Exception e) { ModelState.AddModelError("RECEIP_ERROR", e.Message); return new JsonResult() { Data = new { estado } }; }
+            return new JsonResult { Data = new { estado, ID = ReceipArticleID } };
         }
         // GET: ReceipArticle/Edit/5
         public ActionResult Edit(int? id)
@@ -148,6 +215,7 @@ namespace RecepcionDeRadios.Controllers
         }
 
         // GET: ReceipArticle/Delete/5
+        [Authorize(Roles ="Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -161,8 +229,22 @@ namespace RecepcionDeRadios.Controllers
             }
             return View(receipArticle);
         }
+        public ActionResult PrintView(int? id) {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ReceipArticle receipArticle = db.ReceipArticles.Find(id);
+            if (receipArticle == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.USER = db.Users.Single(b => b.ID == receipArticle.usuarioRecibe);
+            return View(receipArticle);
+        }
 
         // POST: ReceipArticle/Delete/5
+        [Authorize(Roles ="Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -21,18 +21,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Recepcion de radios", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Recepción de radios", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Administrador"))
                     {
-                        <li>@Html.ActionLink("Articulos", "", "receiparticle")</li>
+                        <li>@Html.ActionLink("Recepciones", "", "receiparticle")</li>
+                        <li>@Html.ActionLink("Artículos", "", "receiparticledetail")</li>
                         <li>@Html.ActionLink("Usuarios", "", "user")</li>
                     }
                     @if (User.IsInRole("Tecnico"))
                     {
-                        <li>@Html.ActionLink("Articulos", "", "receiparticle")</li>
+                        <li>@Html.ActionLink("Artículos", "", "receiparticle")</li>
                     }
                 </ul>
                 @if (User.Identity.IsAuthenticated)

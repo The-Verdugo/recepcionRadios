@@ -3,6 +3,7 @@ var i=0;//Contador para cargas individuales de elementos
 
 //Funcion para agregar tarjetas al Div de los articulos
 function addElemento(){
+  // Verifica los campos necesarios en el formulario
   if($('#IdArticulo').val().trim()=="" ){
     addAlertsError('El campo ID Articulo es obligatorio');
     document.getElementById("IdArticulo").focus();
@@ -11,6 +12,7 @@ function addElemento(){
     document.getElementById("Falla").focus();
   }else{
   var objeto = {
+    Description: $('#Descripcion').val().trim(),
     ArticleID: $('#IdArticulo').val().trim(),
     ReportedFailure: $('#Falla').val().trim()
   }
@@ -38,8 +40,8 @@ function addAlertsError(text){
 }
 //Crea alertas Success en el DOM
 function addAlertsSuccess(text){
-  var cardAlert = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong></button></div>' 
-      $('#formReceipContainer').before(cardAlert);
+  var cardSuccess = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>'+text+'</strong></button></div>' 
+      $('#formReceipContainer').before(cardSuccess);
 }
 //Crea Alertas Success Con Boton en el DOM 
 function addAlertsSuccessBtn(text,btnText){
@@ -70,11 +72,11 @@ $(function() {
         data: JSON.stringify(receiparticle),
     
         contentType: 'application/json',
-        success: function (data) { //Respuesta afirmativa desde el controlador
-            if (data.estado) {//Comprobacion de que los datos fueron agregados
+        success: function (Data) { //Respuesta afirmativa desde el controlador
+            if (Data.estado) {//Comprobacion de que los datos fueron agregados
                 addAlertsSuccess("Articulo Agregado Correctamente");
                 // alert('Articulo agregado correctamente');
-                location.href ="/receiparticle/index";
+                location.href = "/receiparticle/details/" + Data.ID;
             }
             else {//Error al agregar los datos
                 addAlertsError("El Número de colaborador es obligatorio");
@@ -109,5 +111,3 @@ $(function() {
     i--;
   });
 });
-
-

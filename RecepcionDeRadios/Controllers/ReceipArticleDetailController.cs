@@ -4,8 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using RecepcionDeRadios.DAL;
 using RecepcionDeRadios.Models;
 
@@ -14,12 +18,10 @@ namespace RecepcionDeRadios.Controllers
     public class ReceipArticleDetailController : Controller
     {
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
-
         // GET: ReceipArticleDetail
         public ActionResult Index()
         {
-            var receipArticleDetails = db.ReceipArticleDetails.Include(r => r.ReceipArticle);
-            return View(receipArticleDetails.ToList());
+            return View(db.ReceipArticleDetails.ToList());
         }
 
         // GET: ReceipArticleDetail/Details/5
@@ -34,6 +36,7 @@ namespace RecepcionDeRadios.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.IdArticle = id;
             return View(receipArticleDetail);
         }
 
@@ -63,6 +66,7 @@ namespace RecepcionDeRadios.Controllers
         }
 
         // GET: ReceipArticleDetail/Edit/5
+        [Authorize(Roles = "Administrador ,Tecnico")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,6 +78,7 @@ namespace RecepcionDeRadios.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.BOOL = false;
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);
         }
@@ -81,15 +86,19 @@ namespace RecepcionDeRadios.Controllers
         // POST: ReceipArticleDetail/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrador ,Tecnico")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status")] ReceipArticleDetail receipArticleDetail)
+        public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status,Description,ReportedFailure")] ReceipArticleDetail receipArticleDetail)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.BOOL = true;
+
+                return  RedirectToAction("Details","ReceipArticle", new { id=receipArticleDetail.ReceipArticleID});
             }
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe", receipArticleDetail.ReceipArticleID);
             return View(receipArticleDetail);

@@ -5,49 +5,62 @@
 }
 @section Styles {
     <link href="@Url.Content("~/Content/ReceipArticle.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estatus.css")" rel="stylesheet" type="text/css" />
 }
 
 <div class="container">
+    
+    
     <div class="col-sm-12 col-md-6 col-lg-6">
-            <h2>Detalles de la recepción</h2>
-            </hr>
-            <div class="panel panel-default col-lg-12">
-                <div class="form-group">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.usuarioRecibe)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.usuarioRecibe)
-                    </dd>
-                </div>
-            </div>
-            <div class="panel panel-default col-lg-6"> 
+        <h2>Detalles de la recepción</h2>
+        </hr>
+        <div class="panel panel-default col-lg-12">
+            <div class="form-group">
                 <dt>
-                    @Html.DisplayNameFor(model => model.empleadoEntrega)
+                    @Html.DisplayNameFor(model => model.usuarioRecibe)
                 </dt>
                 <dd>
-                    @Html.DisplayFor(model => model.empleadoEntrega)
+                    @ViewBag.USER.Name
                 </dd>
             </div>
-            <div class="panel panel-default col-lg-6">
-                <dt>
-                    @Html.DisplayNameFor(model => model.fechaRecibido)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.fechaRecibido)
-                </dd>
-            </div>
-            <div class="panel panel-default col-lg-6">
-                <dt>
-                    @Html.DisplayNameFor(model => model.fechaEntregado)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.fechaEntregado)
-                </dd>
-            </div>
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.empleadoEntrega)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.empleadoEntrega)
+            </dd>
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaRecibido)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.fechaRecibido)
+            </dd>
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.fechaEntregado)
+            </dt>
+            
+                @if (Model.fechaEntregado == Model.fechaRecibido)
+                {
+                    <dd>Aún no ha sido entregado</dd>
+                }
+                else
+                {
+                    <dd>@Html.DisplayFor(model => model.fechaEntregado)</dd>
+                }
+
+        
+        </div>
         <div class="col-md-12 col-lg-12">
             <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a> |
-            <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar <span class="glyphicon glyphicon-pencil"></span></a>
+            <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar Recepción <span class="glyphicon glyphicon-pencil"></span></a> |
+            <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Print Ticket <i class="fas fa-print"></i></a> |
+            <a href="@Url.Action("Print",new {id = Model.ID })" class="btn btn-danger" target="_blank">PDF <i class="fas fa-file-pdf"></i></a>
         </div>
     </div>
 
@@ -55,22 +68,74 @@
         <div id="articles" class="articles-container">
             <h2>Articulos recibidos</h2>
             @foreach (var item in Model.ReceipArticleDetails)
-                    {
-                        <div class="article">
-                            <div class="article-preview"> 
-                                <h6>ID del Articulo</h6>
-                                <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
-                            </div>
-                            <div class="article-info"> 
-                                <h6>Falla</h6>
-                                <h4>@Html.DisplayFor(modelItem => item.ReportedFailure)</h4>
-                                @Html.ActionLink("Actualizar Estatus", "Edit","ReceipArticleDetail", new { id=item.Id },new{@class="btn btn-warning btn-xs"})
-                                @Html.ActionLink("Más Información", "Details","ReceipArticleDetail", new { id=item.Id },new{@class="btn btn-info btn-xs"})
-                                @Html.ActionLink("Eliminar", "Delete","ReceipArticleDetail", new { id=item.Id },new{@class="btn btn-danger btn-xs"})
-                            </div>
-                        </div>
-                    }
+            {
+        <div class="article">
+            @switch (item.Status)
+            {
+                case 1:<div class="article-preview-recibido">
+                        <h6>Descripción</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                        <h6>ID</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
+                    </div>;
+                    break;
+                case 2:<div class="article-preview-entregadoP">
+                        <h6>Descripción</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                        <h6>ID</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
+                    </div>;
+                    break;
+                case 3:<div class="article-preview-reparado">
+                        <h6>Descripción</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                        <h6>ID</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
+                    </div>;
+                    break;
+                case 4:<div class="article-preview-baja">
+                        <h6>Descripción</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                        <h6>ID</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
+                    </div>;
+                    break;
+                case 5:<div class="article-preview-entregadoU">
+                        <h6>Descripción</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.Description)</h4>
+                        <h6>ID</h6>
+                        <h4>@Html.DisplayFor(modelItem => item.ArticleID)</h4>
+                        </div>;
+                    break;
+                default:<label class="lbl-none">Estatus no disponible <i class="far fa-circle"></i></label><br /> <br />;
+                    break;
+            }
+            <div class="article-info">
+                <label class="lbl-comments">Comentarios: @Html.DisplayFor(modelItem => item.Comments.Count) <i class="fas fa-comments"></i></label>
+                <h6>Falla</h6>
+                <h4>@Html.DisplayFor(modelItem => item.ReportedFailure)</h4>
+                <h6>Estatus</h6>
+                @switch (item.Status)
+                {
+                    case 1:<label class="lbl-recibido">Recibido <i class="fas fa-clipboard-check"></i></label><br /> <br />;
+                        break;
+                    case 2:<label class="lbl-entregadoP">Entregado al proveedor <i class="fas fa-clock"></i></label><br /> <br />;
+                        break;
+                    case 3:<label class="lbl-reparado">Reparado <i class="far fa-check-square"></i></label><br /> <br />;
+                        break;
+                    case 4:<label class="lbl-baja">Baja <i class="fas fa-window-close"></i></label><br /> <br />;
+                        break;
+                    case 5:<label class="lbl-entregadoU">Entregado a usuario <i class="fas fa-check-square"></i></label><br /> <br />;
+                        break;
+                    default:<label class="lbl-none">Estatus no disponible <i class="far fa-circle"></i></label><br /> <br />;
+                        break;
+                }
+                @Html.ActionLink("Actualizar Estatus", "Edit", "ReceipArticleDetail", new { id = item.Id, st = true }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Más Información", "Details", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-info btn-xs" })
+                @Html.ActionLink("Eliminar", "Delete", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
+            </div>
+        </div>
+            }
         </div>
     </div>
 </div>
-

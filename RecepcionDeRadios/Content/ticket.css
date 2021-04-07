@@ -1,0 +1,20 @@
+﻿
+.container{
+    margin: auto;
+    width: 76mm;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.tabla{
+    margin: auto;
+}
+.articles{
+    margin-top: 1px;
+}
+.logo{
+   width: 60mm; 
+   height: 10mm;
+}
+
