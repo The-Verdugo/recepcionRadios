@@ -9,27 +9,40 @@
     <h2>Listado de recepción de articulos</h2>
     <div class="form-group form-inline">
         <div class="col-lg-5 col-md-5 col-xs-5">
-            <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+           <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
         </div>
         <div class="col-lg-7 col-md-7 col-xs-7">
             <p>
-            @if (ViewBag.All)
-            {
-                <select id="criterio" name="criterio" class="form-control">
-                    <option value="1" selected>Folio</option>
-                    <option value="2">No de Colaborador</option>
-                </select>
-                <input type="text" class="form-control" placeholder="Busqueda" name="dato" id="dato" value='@ViewBag.Colab' />
-                <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button> 
-            }else{
-                <a href="@Url.Action("Index")" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Recargar Todo"><i class="fas fa-sync-alt"></i></a>
-                <select id="criterio" name="criterio" class="form-control">
-                    <option value="1" selected>Folio</option>
-                    <option value="2">No de Colaborador</option>
-                </select>
-                <input type="text" class="form-control" placeholder="Busqueda por Colaborador" name="dato" id="dato" value='@ViewBag.Colab' />
-                <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button> 
-            }
+                @if (ViewBag.All)
+                {
+                    <select id="criterio" name="criterio" class="form-control">
+                        <option value="1" selected>Folio</option>
+                        <option value="2">No de Colaborador</option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="Busqueda" name="dato" id="dato" value='@ViewBag.Colab' />
+                    <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index")" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Recargar Todo"><i class="fas fa-sync-alt"></i></a>
+                    if (ViewBag.Find)
+                    {
+                        <select id="criterio" name="criterio" class="form-control">
+                            <option value="1" selected>Folio</option>
+                            <option value="2">No de Colaborador</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="criterio" name="criterio" class="form-control">
+                            <option value="1">Folio</option>
+                            <option value="2" selected>No de Colaborador</option>
+                        </select>
+                    }
+
+                    <input type="text" class="form-control" placeholder="Busqueda por Colaborador" name="dato" id="dato" value='@ViewBag.Colab' />
+                    <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
+                }
             </p>
         </div>
     </div>
@@ -54,28 +67,38 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>#
-            @Html.DisplayFor(modelItem => item.ID)
-        </td>
-        <td>
-            <span class="badge">@item.ReceipArticleDetails.Count</span>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.empleadoEntrega)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaRecibido)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaEntregado)
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-warning btn-xs">Editar <span class="glyphicon glyphicon-pencil"></span></a> |
-            <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs">Detalles <span class="glyphicon glyphicon-info-sign"></span></a> |
-            <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs">Eliminar <span class="glyphicon glyphicon-trash"></span></a>
-        </td>
-    </tr>
+<tr>
+    <td>
+        #
+        @Html.DisplayFor(modelItem => item.ID)
+    </td>
+    <td>
+        <span class="badge">@item.ReceipArticleDetails.Count</span>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.empleadoEntrega)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.fechaRecibido)
+    </td>
+        @if (item.fechaRecibido == item.fechaEntregado)
+        {
+            <td>
+                <p>Sin entregar</p>
+            </td>
+        }
+        else
+        { 
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaEntregado)
+            </td>
+        }
+    <td>
+        <a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-warning btn-xs">Editar <span class="glyphicon glyphicon-pencil"></span></a> |
+        <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs">Detalles <span class="glyphicon glyphicon-info-sign"></span></a> |
+        <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs">Eliminar <span class="glyphicon glyphicon-trash"></span></a>
+    </td>
+</tr>
 }
 
 </table>

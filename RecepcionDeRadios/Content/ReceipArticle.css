@@ -43,10 +43,41 @@
         letter-spacing: 1px;
         margin: 10px 0;
     }
-
 .article-preview {
-    background-color: #22587c;
+        background: linear-gradient(to bottom right, rgb(103, 179, 250),rgb(0, 99, 192));
+        color: #fff;
+        padding: 30px;
+        max-width: 250px;
+ }
+.article-preview-recibido {
+    background: linear-gradient(to bottom right, rgb(250, 157, 103),rgb(216, 110, 49));
     color: #fff;
+    padding: 30px;
+    max-width: 250px;
+}
+.article-preview-entregadoP {
+    background: linear-gradient(to bottom right, rgb(87, 170, 190),rgb(40, 144, 170));
+    color: #fff;
+    padding: 30px;
+    max-width: 250px;
+}
+.article-preview-reparado {
+    background: linear-gradient(to bottom right,rgb(133, 194, 54),rgb(64, 105, 9));
+    color: #fff;
+    padding: 30px;
+    max-width: 250px;
+}
+.article-preview-baja {
+    background: linear-gradient(to bottom right,rgb(250, 119, 119),rgb(180, 46, 46));
+    color: #fff;
+    padding: 30px;
+    max-width: 250px;
+}
+.article-preview-entregadoU {
+    background: url("~/Resources/ok.png") no-repeat center, linear-gradient(100deg, rgb(104, 219, 110) 10%, rgb(87, 218, 36) 100%);
+    background-size: contain;
+    opacity: 20;
+    color: rgb(255, 255, 255);
     padding: 30px;
     max-width: 250px;
 }
@@ -106,7 +137,7 @@
     }
 }
 .btn-article {
-    background-color: #26525f;
+    background: linear-gradient(to bottom right, rgb(99, 179, 255),rgb(1, 87, 168));
     border: 0;
     border-radius: 50px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
@@ -123,7 +154,8 @@ a:link, a:visited, a:active {
 }
 .btn-article:hover{
     color: #ffffff;
-    background-color: rgb(253, 74, 74);
+    background: linear-gradient(to bottom right, rgb(226, 88, 88),rgb(206, 21, 21));
+    animation-delay: 10s, 30s, 230ms;
 }
 
 
