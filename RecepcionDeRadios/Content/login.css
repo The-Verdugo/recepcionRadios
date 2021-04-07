@@ -7,7 +7,7 @@
 }
 
 .company__info {
-    background-color: #1f3b41;
+    background: linear-gradient(to bottom right, rgb(28, 120, 196), rgb(0, 77, 177));
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     display: flex;

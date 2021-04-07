@@ -4,18 +4,23 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Artículos Recibidos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create","ReceipArticle")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+    <a href="#" class="btn btn-danger">Generar Reporte <i class="fas fa-file-pdf"></i></a>
 </p>
 <table class="table table-striped">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
+        <th></th>
         <th>
             @Html.DisplayNameFor(model => model.ArticleID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReportedFailure)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Status)
@@ -24,22 +29,30 @@
     </tr>
 
 @foreach ( var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ArticleID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+    if (item.Status==1)
+    {
+        <tr>
+            <td><input type="checkbox" id="Authorized" name="Authorized" value="@item.ArticleID" /></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportedFailure)
+            </td>
+            <td>
+                <p>Recibido</p>
+            </td>
+            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    } 
 }
 
 </table>

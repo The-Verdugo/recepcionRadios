@@ -17,7 +17,7 @@
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.ReceipArticleID)
     @Html.HiddenFor(model => model.ArticleID)
-    @Html.HiddenFor(model => model.Descripcion)
+    @Html.HiddenFor(model => model.Description)
     @Html.HiddenFor(model => model.ReportedFailure)
 
     <div class="form-group col-lg-12">
@@ -71,14 +71,7 @@
 
     <div class="form-group col-lg-12">
         <div class="col-lg-12">
-            @if (ViewBag.BOOL)
-            {
-                <a href="javascript:window.history.go(-2);" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> 
-            }
-            else
-            {
-                <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
-            }
+            <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
             <input type="submit" value="Guardar" class="btn btn-success" />
             <a id="btnCreateComment" class="btn btn-primary btnsmall">Comentar <i class="fas fa-comment"></i></a>
         </div>

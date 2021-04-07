@@ -10,7 +10,7 @@
 
 <div class="container col-12">
     <div class="col-md-7 col-sm-12" id="formReceipContainer">
-        <h2>Recepcion de Articulo</h2>
+        <h2>Recepcion de Artículos</h2>
         <span class="label label-warning"><i class="fas fa-asterisk"></i> Campos obligatorios</span>
         <hr />
         @if (ViewData.ModelState["RECEIP_ERROR"] != null) {
@@ -41,7 +41,7 @@
                         <div class="col-sm-10">
 
 
-                            <input class="form-control text-box single-line" id="Nombre" name="Nombre" type="text" value="" readOnly="readonly">
+                            <input class="form-control text-box single-line" id="Nombre" name="Nombre" type="text" value="" readonly>
 
 
                         </div>
@@ -53,7 +53,7 @@
 
 
 
-                            <input class="form-control text-box single-line" id="Puesto" name="Puesto" type="text" value="" readOnly="readonly">
+                            <input class="form-control text-box single-line" id="Puesto" name="Puesto" type="text" value="" readonly>
 
 
 
@@ -65,7 +65,7 @@
                         <div class="col-sm-10">
 
 
-                            <input class="form-control text-box single-line" id="Departamento" name="Departamento" type="text" value="" readOnly="readonly">
+                            <input class="form-control text-box single-line" id="Departamento" name="Departamento" type="text" value="" readonly>
 
 
                         </div>
@@ -84,7 +84,7 @@
 
 
 
-                            <input class="form-control text-box single-line" id="Descripcion" name="Descripcion" type="text" value="" readOnly="readonly">
+                            <input class="form-control text-box single-line" id="Descripcion" name="Descripcion" type="text" value="" readonly>
 
 
 
@@ -97,7 +97,7 @@
 
 
 
-                            <input class="form-control text-box single-line" id="Marca" name="Marca" type="text" value="" readOnly="readonly">
+                            <input class="form-control text-box single-line" id="Marca" name="Marca" type="text" value="" readonly>
 
 
 
@@ -109,7 +109,7 @@
                         <div class="col-sm-10">
 
 
-                            <input class="form-control text-box single-line" id="Modelo" name="Modelo" type="text" value="" readOnly="readonly">
+                            <input class="form-control text-box single-line" id="Modelo" name="Modelo" type="text" value="" readonly>
 
 
                         </div>
@@ -163,7 +163,8 @@
 
     function getEmployeeData() {
         let clave = claveEmpleado.value
-        let urlEmpl = @ViewBag.URLEmpl
+        let urlEmpl = '@ViewBag.URLEmpl'
+        let ur = urlEmpl+clave
         fetch(urlEmpl + clave)
             .then(response => response.json())
             .then(data => {
@@ -176,7 +177,7 @@
 
     function getArticleData() {
         let id = IdArticulo.value
-        let urlArt = @ViewBag.URLArt
+        let urlArt = '@ViewBag.URLArt'
         fetch(urlArt + id)
             .then(response => response.json())
             .then(data => {
