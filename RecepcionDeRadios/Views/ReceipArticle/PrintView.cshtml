@@ -9,21 +9,21 @@
 <div class="container">
     <img class="logo" src="https://grupovidantarh.files.wordpress.com/2017/02/cropped-logo-grupo-vidanta-plano-02-11.png" />
     <h3>Recepción de radios</h3>
-    <p class="ticket-data">Folio: #@Html.DisplayFor(model => model.ID)</p>
-    <p class="ticket-data">Usuario que recibe: @ViewBag.USER.Name</p>
-    <p class="ticket-data">Colaborador que entrega: @Html.DisplayFor(model => model.empleadoEntrega)</p>
-    <p class="ticket-data">Fecha Recibido: @Html.DisplayFor(model => model.fechaRecibido)</p>
+    <p>Folio: #@Html.DisplayFor(model => model.ID)</p>
+    <p>Usuario que recibe: @ViewBag.USER.Name</p>
+    <p>Colaborador que entrega: @Html.DisplayFor(model => model.empleadoEntrega)</p>
+    <p>Fecha Recibido: @Html.DisplayFor(model => model.fechaRecibido)</p>
     <h3>Listado de artículos</h3>
     <table class="tabla">
         <tr>
             <th>
-                <p class="ticket-data">ID<hr /></p>
+                <p>ID<hr /></p>
             </th>
             <th>
-                <p class="ticket-data">Descripción<hr /></p>
+                <p>Descripción<hr /></p>
             </th>
             <th>
-                <p class="ticket-data">Falla<hr /></p>
+                <p>Falla<hr /></p>
             </th>
         </tr>
 
@@ -31,20 +31,23 @@
         {
             <tr class="articles">
                 <td>
-                    <p class="ticket-data"> @Html.DisplayFor(modelItem => item.ArticleID) </p>
+                    <p> @Html.DisplayFor(modelItem => item.ArticleID) </p>
                 </td>
                 <td>
-                    <p class="ticket-data"> @Html.DisplayFor(modelItem => item.Description)</p>
+                    <p> @Html.DisplayFor(modelItem => item.Description)</p>
                 </td>
                 <td>
-                    <p class="ticket-data"> @Html.DisplayFor(modelItem => item.ReportedFailure)</p>
+                    <p> @Html.DisplayFor(modelItem => item.ReportedFailure)</p>
                 </td>
             </tr>
         }
 
     </table>
-    <p class="ticket-data">Fecha y hora de impresión: @DateTime.Now</p>
+    <p>Fecha y hora de impresión: @DateTime.Now</p>
     <script type="text/javascript">
-        $(document).ready(function () { window.print(); });
+        $(document).ready(function () {
+            window.print();
+            window.onfocus = function () { window.close(); }
+        });
     </script>
 </div>

@@ -6,77 +6,139 @@
 @section Styles {
     <link href="@Url.Content("~/Content/Comments.css")" rel="stylesheet" type="text/css" />
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @onsubmit= "return enviar();", id="FormEditDetails" }))
 {
     @Html.AntiForgeryToken()
 <div class="container-fluid">
-<div class="col-lg-6">
-    <h2>Editar Estatus</h2>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.ReceipArticleID)
-    @Html.HiddenFor(model => model.ArticleID)
-    @Html.HiddenFor(model => model.Description)
-    @Html.HiddenFor(model => model.ReportedFailure)
+    <div class="col-lg-6">
+        <h2>Editar Estatus</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.ReceipArticleID)
+        @Html.HiddenFor(model => model.ArticleID)
+        @Html.HiddenFor(model => model.Description)
+        @Html.HiddenFor(model => model.ReportedFailure)
 
-    <div class="form-group col-lg-12">
-        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-lg-12">
-            <select id="Status" name="Status" class="form-control">
-                @if (Model.Status == 1)
-                {
-                    <option value="1" selected>Recibido</option>
-                    <option value="2">Entregado al proveedor</option>
-                    <option value="3">Reparado</option>
-                    <option value="4">Baja</option>
-                    <option value="5">Entregado al Usuario</option>
-                }
-                else if (Model.Status == 2)
-                {
-                    <option value="1">Recibido</option>
-                    <option value="2" selected>Entregado al proveedor</option>
-                    <option value="3">Reparado</option>
-                    <option value="4">Baja</option>
-                    <option value="5">Entregado al Usuario</option>
-                }
-                else if (Model.Status == 3)
-                {
-                    <option value="1">Recibido</option>
-                    <option value="2">Entregado al proveedor</option>
-                    <option value="3" selected>Reparado</option>
-                    <option value="4">Baja</option>
-                    <option value="5">Entregado al Usuario</option>
-                }
-                else if (Model.Status == 4)
-                {
-                    <option value="1">Recibido</option>
-                    <option value="2">Entregado al proveedor</option>
-                    <option value="3">Reparado</option>
-                    <option value="4" selected>Baja</option>
-                    <option value="5">Entregado al Usuario</option>
-                }
-                else if (Model.Status == 5)
-                {
-                    <option value="1">Recibido</option>
-                    <option value="2">Entregado al proveedor</option>
-                    <option value="3">Reparado</option>
-                    <option value="4">Baja</option>
-                    <option value="5" selected>Entregado al Usuario</option>
-                }
-            </select>
-            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        <div class="form-group col-lg-12">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-lg-12">
+                <select id="Status" name="Status" class="form-control">
+                    @if (Model.Status == 1)
+                    {
+                        <option value="1" selected>Recibido</option>
+                        <option value="2">Entregado al proveedor</option>
+                        <option value="3">Reparado</option>
+                        <option value="4">Baja</option>
+                        <option value="5">Entregado al Usuario</option>
+                    }
+                    else if (Model.Status == 2)
+                    {
+                        <option value="1">Recibido</option>
+                        <option value="2" selected>Entregado al proveedor</option>
+                        <option value="3">Reparado</option>
+                        <option value="4">Baja</option>
+                        <option value="5">Entregado al Usuario</option>
+                    }
+                    else if (Model.Status == 3)
+                    {
+                        <option value="1">Recibido</option>
+                        <option value="2">Entregado al proveedor</option>
+                        <option value="3" selected>Reparado</option>
+                        <option value="4">Baja</option>
+                        <option value="5">Entregado al Usuario</option>
+                    }
+                    else if (Model.Status == 4)
+                    {
+                        <option value="1">Recibido</option>
+                        <option value="2">Entregado al proveedor</option>
+                        <option value="3">Reparado</option>
+                        <option value="4" selected>Baja</option>
+                        <option value="5">Entregado al Usuario</option>
+                    }
+                    else if (Model.Status == 5)
+                    {
+                        <option value="1">Recibido</option>
+                        <option value="2">Entregado al proveedor</option>
+                        <option value="3">Reparado</option>
+                        <option value="4">Baja</option>
+                        <option value="5" selected>Entregado al Usuario</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
+        @if (Model.Status == 2)
+        {
+            <div class="form-group col-lg-12" id="DivFechaEntregaProveedor">
+                <div class="col-lg-12">
+                    @Html.HiddenFor(model => model.FechaEntregaProveedor, new { htmlAttributes = new { @class = "form-control", @Value = Model.FechaEntregaProveedor, ReadOnly = "readonly" } })
+                </div>
+                @Html.LabelFor(model => model.PaseSalida, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.PaseSalida, new { htmlAttributes = new { @class = "form-control", @Value = Model.PaseSalida, ReadOnly = "readonly" } })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group col-lg-12" id="DivFechaEntregaProveedor" style="display:none;">
+                <div class="col-lg-12">
+                    @Html.HiddenFor(model => model.FechaEntregaProveedor, new { htmlAttributes = new { @class = "form-control", @Value = Model.FechaEntregaProveedor, ReadOnly = "readonly" } })
+                </div>
+                @Html.LabelFor(model => model.PaseSalida, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.PaseSalida, new { htmlAttributes = new { @class = "form-control", @Value = Model.PaseSalida, ReadOnly = "readonly" } })
+                </div>
+            </div>
+        }
+        @if (Model.Status == 4)
+        {
+            <div class="form-group col-lg-12" id="DivBaja">
+                @Html.LabelFor(model => model.FolioBaja, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.FolioBaja, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Ingrese el folio de baja"} })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group col-lg-12" id="DivBaja" style="display:none;">
+                @Html.LabelFor(model => model.FolioBaja, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.FolioBaja, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Ingrese el folio de baja" } })
+                </div>
+            </div>
+        }
+        @if (Model.Status == 5)
+        {
+            <div class="form-group col-lg-12" id="DivFechaEntregaUsuario">
+                @Html.LabelFor(model => model.FechaEntregaUsuario, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.FechaEntregaUsuario, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now, ReadOnly = "readonly" } })
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group col-lg-12" id="DivFechaEntregaUsuario" style="display:none;">
+                @Html.LabelFor(model => model.FechaEntregaUsuario, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.FechaEntregaUsuario, new { htmlAttributes = new { @class = "form-control", @Value = DateTime.Now, ReadOnly = "readonly" } })
+                </div>
+            </div>
+        }
+        
 
-    <div class="form-group col-lg-12">
-        <div class="col-lg-12">
-            <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
-            <input type="submit" value="Guardar" class="btn btn-success" />
-            <a id="btnCreateComment" class="btn btn-primary btnsmall">Comentar <i class="fas fa-comment"></i></a>
+
+        <div class="form-group col-lg-12">
+            <div class="col-lg-12">
+                <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+                <input type="submit" value="Guardar" id="saveChangesBtn" class="btn btn-success" />
+                <a id="btnCreateComment" class="btn btn-primary btnsmall">Comentar <i class="fas fa-comment"></i></a>
+            </div>
         </div>
-    </div>
-    <div id="FormComment" class="col-md-12 col-lg-12" style="display: none;">
+        <div id="FormComment" class="col-md-12 col-lg-12" style="display: none;">
             <h3>Nuevo Comentario</h3>
             <div class="well col-lg-12">
                 <div class="form-group col-lg-6">
@@ -91,19 +153,19 @@
                 <div class="form-group col-lg-6">
                     <input id="UserHidden" name="UserHidden" type="hidden" value="@HttpContext.Current.Session["User"].ToString()">
                     <label for="commentFormUser">Usuario</label>
-                    <input type="textarea" class="form-control" id="commentFormUser"  readonly>
+                    <input type="textarea" class="form-control" id="commentFormUser" readonly>
                 </div>
                 <div class="form-group col-lg-6">
                     <input id="FechaHidden" name="FechaHidden" type="hidden" value="@DateTime.Now">
                     <label for="commentFormDate">Fecha</label>
-                    <input type="textarea" class="form-control" id="commentFormDate"  readonly>
+                    <input type="textarea" class="form-control" id="commentFormDate" readonly>
                 </div>
                 <div class="form-group col-lg-6">
                     <button class="btn btn-success btnsmall" id="commentFormBtnSave">Agregar <i class="fas fa-comment-medical"></i></button>
                 </div>
             </div>
+        </div>
     </div>
-</div>
 <div class="col-lg-6">
     <h2>Comentarios</h2>
     <hr />
@@ -127,5 +189,82 @@
 </div>
 </div>
 }
+<script type="text/javascript">
+    $(function () {
+    $('select[name=Status]').change(function () {
+        $('#DivFechaEntregaProveedor').hide();
+        $('#DivFechaEntregaUsuario').hide();
+        $('#DivBaja').hide();
+        var value = $('select[name=Status]').val();
+        switch (value) {
+            case "2": $('#DivFechaEntregaProveedor').show()
+                $('#FechaEntregaProveedor').val('@DateTime.Now')
+                if ('@Model.PaseSalida' != '') {
+                    $('#PaseSalida').val(@Model.PaseSalida)
+                    $('#FechaEntregaUsuario').val('@Model.FechaEntregaUsuario')
+                } else
+                {
+                    $('#PaseSalida').removeAttr('readonly')
+                }
+                if ('@Model.FolioBaja' != '') {
+                    $('#FolioBaja').val('@Model.FolioBaja')
+                }
+                break;
+            case "4": $('#DivBaja').show()
+                if ('@Model.FolioBaja' != '') {
+                    $('#FolioBaja').val('@Model.FolioBaja')
+                } else {
+                    $('#FolioBaja').removeAttr('readonly')
+                    if ('@Model.FechaEntregaProveedor' != '') {
+                        $('#FechaEntregaProveedor').val('@Model.FechaEntregaProveedor')
+                    }
+                    $('#FechaEntregaUsuario').val('');
+                }
+                break;
+            case "5": $('#DivFechaEntregaUsuario').show()
+                $('#FechaEntregaUsuario').val('@DateTime.Now')
+                if ('@Model.FechaEntregaProveedor' != '') {
+                    $('#FechaEntregaProveedor').val('@Model.FechaEntregaProveedor')
+                } else {
+                    $('#FechaEntregaProveedor').val('')
+                    $('#FolioBaja').val('')
+                }
+                break;
+            default: ;
+                break;
+        }
+    });
+    });
+    //Funcion para agregar alerta de tipo Success en el DOM
+    function addAlertsSuccessEdit(text) {
+        var cardAlert = '<div class="alert alert-success alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only"> Success:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>' + text + '</strong></button></div>'
+        $('#FormEditDetails').append(cardAlert);
+    };
+    //Funcion para agregar alertas tipo error en el DOM
+    function addAlertsErrorEdit(text) {
+        var cardAlert = '<div class="alert alert-danger alert-dismissible" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>' + text + '</strong></button></div>'
+        $('#FormEditDetails').append(cardAlert);
+    };
+    function enviar() {
+        var formulario = document.getElementById("FormEditDetails");
+        var value = $('select[name=Status]').val();
+        if (value == "4") {
+            if ($('#FolioBaja').val() != "") {
+                addAlertsSuccessEdit("Guardado Correctamente");
+                formulario.submit();
+                return true;
+            } else {
+                addAlertsErrorEdit("El campo Folio de baja es obligatorio");
+                $('#FolioBaja').focus();
+                return false;
+            }
+
+        } else {
+            addAlertsSuccessEdit("Agregado correctamente");
+            formulario.submit();
+            return true;
+        }
+    };
+</script>
 
 
