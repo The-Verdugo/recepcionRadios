@@ -27,28 +27,35 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Level)
         </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Level)
-        </dd>
+        @switch (Model.Level)
+        {
+            case 1:
+                <dd>Administrador</dd>
+                break;
+            case 2:
+                <dd>Técnico</dd>
+                break;
+            default:
+                break;
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.Active)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
+        @switch (Model.Active)
+        {
+            case 1:
+                <dd>Si</dd>
+                break;
+            case 2:
+                <dd>No</dd>
+                break;
+            default:
+                break;
+        }
 
     </dl>
 </div>

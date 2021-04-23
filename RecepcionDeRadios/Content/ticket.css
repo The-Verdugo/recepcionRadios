@@ -17,4 +17,7 @@
    width: 60mm; 
    height: 10mm;
 }
+.ticket-data {
+    font-size: 11px !important;
+}
 
