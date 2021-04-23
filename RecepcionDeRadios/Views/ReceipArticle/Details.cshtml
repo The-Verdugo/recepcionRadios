@@ -57,7 +57,7 @@
         
         </div>
         <div class="col-md-12 col-lg-12">
-            <a href="@Url.Action("Index")" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a> |
+            <a href="javascript:history.back();" class="btn btn-default"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> |
             <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar Recepción <span class="glyphicon glyphicon-pencil"></span></a> |
             <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Print Ticket <i class="fas fa-print"></i></a> |
             <a href="@Url.Action("Print",new {id = Model.ID })" class="btn btn-danger" target="_blank">PDF <i class="fas fa-file-pdf"></i></a>
@@ -117,22 +117,21 @@
                 <h6>Estatus</h6>
                 @switch (item.Status)
                 {
-                    case 1:<label class="lbl-recibido">Recibido <i class="fas fa-clipboard-check"></i></label><br /> <br />;
+                    case 1:<label class="lbl-recibido">Recibido <i class="fas fa-clipboard-check"></i></label><br /> ;
                         break;
-                    case 2:<label class="lbl-entregadoP">Entregado al proveedor <i class="fas fa-clock"></i></label><br /> <br />;
+                    case 2:<label class="lbl-entregadoP">Entregado al proveedor <i class="fas fa-truck"></i></label> <h5 style="color:lightslategrey; font-size:11px;">Fecha de entrega: @item.FechaEntregaProveedor</h5> ;
                         break;
-                    case 3:<label class="lbl-reparado">Reparado <i class="far fa-check-square"></i></label><br /> <br />;
+                    case 3:<label class="lbl-reparado">Reparado <i class="far fa-check-square"></i></label><br /> ;
                         break;
-                    case 4:<label class="lbl-baja">Baja <i class="fas fa-window-close"></i></label><br /> <br />;
+                    case 4:<label class="lbl-baja">Baja <i class="fas fa-window-close"></i></label><br /> <h5 style="color:lightslategrey; font-size:11px;">Folio de baja: @item.FolioBaja</h5> ;
                         break;
-                    case 5:<label class="lbl-entregadoU">Entregado a usuario <i class="fas fa-check-square"></i></label><br /> <br />;
+                    case 5:<label class="lbl-entregadoU">Entregado a usuario <i class="fas fa-check-square"></i></label><br /> <h5 style="color:lightslategrey; font-size:11px;">Fecha de entrega: @item.FechaEntregaUsuario</h5> ;
                         break;
-                    default:<label class="lbl-none">Estatus no disponible <i class="far fa-circle"></i></label><br /> <br />;
+                    default:<label class="lbl-none">Estatus no disponible <i class="far fa-circle"></i></label><br /> ;
                         break;
                 }
                 @Html.ActionLink("Actualizar Estatus", "Edit", "ReceipArticleDetail", new { id = item.Id, st = true }, new { @class = "btn btn-warning btn-xs" })
                 @Html.ActionLink("Más Información", "Details", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-info btn-xs" })
-                @Html.ActionLink("Eliminar", "Delete", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-danger btn-xs" })
             </div>
         </div>
             }

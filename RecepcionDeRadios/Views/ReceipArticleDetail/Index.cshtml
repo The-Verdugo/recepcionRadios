@@ -2,14 +2,26 @@
 
 @{
     ViewBag.Title = "Index";
+    var cont = 0;
+}
+@section Styles {
+    <link href="@Url.Content("~/Content/ReceipDetailIndex.css")" rel="stylesheet" type="text/css" />
 }
 
 <h2>Artículos Recibidos</h2>
-
-<p>
-    <a href="@Url.Action("Create","ReceipArticle")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
-    <a href="#" class="btn btn-danger">Generar Reporte <i class="fas fa-file-pdf"></i></a>
-</p>
+<div id="alertsDetails"></div>
+<div class="form-inline">
+    <p>
+        <div class="form-group">
+            <a href="@Url.Action("Create","ReceipArticle")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Nuevo</a>
+            <a id="GenerarPase" class="btn btn-primary">Generar Pase de salida <i class="fas fa-plus-circle"></i></a>
+        </div>
+        <div id="FolioSalida" class="form-group" style="display:none;">
+            <input type="text" class="form-control" placeholder="Folio de pase de salida" name="PaseSalida" id="PaseSalida" />
+            <a href="#" id="btnSendID" class="btn btn-danger">Generar <i class="fas fa-file-pdf"></i></a>
+        </div>
+    </p>
+</div>
 <table class="table table-striped">
     <tr>
         <th></th>
@@ -25,38 +37,46 @@
         <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
+        <th style="text-align:center;">
+            Folio de recepción
+        </th>
         <th></th>
     </tr>
 
-@foreach ( var item in Model) {
-    if (item.Status==1)
+    @foreach (var item in Model)
     {
-        <tr>
-            <td><input type="checkbox" id="Authorized" name="Authorized" value="@item.ArticleID" /></td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArticleID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportedFailure)
-            </td>
-            <td>
-                <p>Recibido</p>
-            </td>
-            
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    } 
-}
+        if (item.Status == 1)
+        {
+            cont++;
 
+            <tr>
+                <td><input type="checkbox" id="Authorized" name="checks[]" value="@item.Id" /></td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArticleID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReportedFailure)
+                </td>
+                <td>
+                    <p>Recibido</p>
+                </td>
+                <td style="text-align:center;">
+                    <a href="@Url.Action("Details","ReceipArticle", new { id=item.ReceipArticleID })"><span class="badge badgeindex">#@Html.DisplayFor(modelItem => item.ReceipArticleID)</span></a>
+                </td>
+                <td>
+
+                    <a href="@Url.Action("Details", new { id=item.Id })" class="btn btn-info btn-xs">Más Detalles <span class="glyphicon glyphicon-info-sign"></span></a>
+
+                </td>
+            </tr>
+
+        }
+    }
 </table>
-
-<script type="text/javascript">
-
-</script>
+    @if (cont == 0)
+    {
+        <h4 style="text-align:center; color:grey;">Actualmente no existen artículos con estatus de 'Recibido'</h4>
+    }

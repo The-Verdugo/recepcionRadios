@@ -3,13 +3,17 @@
 @{
     ViewBag.Title = "Index";
 }
+@section Styles {
+    <link href="@Url.Content("~/Content/Comments.css")" rel="stylesheet" type="text/css" />
+}
 @using (Html.BeginForm())
-    {
+{
     @Html.AntiForgeryToken()
     <h2>Listado de recepción de articulos</h2>
     <div class="form-group form-inline">
         <div class="col-lg-5 col-md-5 col-xs-5">
-           <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+            <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+            <a href="@Url.Action("Export","ReceipArticleDetail")" class="btn btn-success excel" target="_blank">Exportar Datos a Excel <i class="fas fa-file-excel"></i></a>
         </div>
         <div class="col-lg-7 col-md-7 col-xs-7">
             <p>
@@ -46,66 +50,67 @@
             </p>
         </div>
     </div>
-<table id="tableReceip" class="table">
-    <tr>
-        <th>
-            Folio
-        </th>
-        <th>
-            Articulos Recibidos
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.empleadoEntrega)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaRecibido)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaEntregado)
-        </th>
-        <th></th>
-    </tr>
+    <table id="tableReceip" class="table table-hover">
+        <tr>
+            <th>
+                Folio
+            </th>
+            <th>
+                Articulos Recibidos
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.empleadoEntrega)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaRecibido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaEntregado)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        #
-        @Html.DisplayFor(modelItem => item.ID)
-    </td>
-    <td>
-        <span class="badge">@item.ReceipArticleDetails.Count</span>
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.empleadoEntrega)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.fechaRecibido)
-    </td>
-        @if (item.fechaRecibido == item.fechaEntregado)
+        @foreach (var item in Model)
         {
-            <td>
-                <p>Sin entregar</p>
-            </td>
+            <tr style="cursor:pointer;" onclick="window.location='@Url.Action("Details", new { id=item.ID })'">
+                <td>
+                    #
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    <span class="badge">@item.ReceipArticleDetails.Count</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.empleadoEntrega)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fechaRecibido)
+                </td>
+                @if (item.fechaRecibido == item.fechaEntregado)
+                {
+                    <td>
+                        <p>Sin entregar</p>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fechaEntregado)
+                    </td>
+                }
+                <td>
+                    <a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-warning btn-xs">Editar <span class="glyphicon glyphicon-pencil"></span></a> |
+                    <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs">Detalles <span class="glyphicon glyphicon-info-sign"></span></a> |
+                    <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs">Eliminar <span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
         }
-        else
-        { 
-            <td>
-                @Html.DisplayFor(modelItem => item.fechaEntregado)
-            </td>
-        }
-    <td>
-        <a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-warning btn-xs">Editar <span class="glyphicon glyphicon-pencil"></span></a> |
-        <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs">Detalles <span class="glyphicon glyphicon-info-sign"></span></a> |
-        <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs">Eliminar <span class="glyphicon glyphicon-trash"></span></a>
-    </td>
-</tr>
+
+    </table>
+
 }
-
-</table>
-
-    }
 <script type="text/javascript">
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>

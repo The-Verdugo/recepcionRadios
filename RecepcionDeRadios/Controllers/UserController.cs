@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using RecepcionDeRadios.DAL;
@@ -15,6 +16,7 @@ namespace RecepcionDeRadios.Controllers
     {
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
 
+        [Authorize]
         // GET: User
         public ActionResult Index()
         {
@@ -112,6 +114,23 @@ namespace RecepcionDeRadios.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public JsonResult ChangeActiveUser(string id,int active)
+        {
+            bool estado = false;
+            var ReceipArticleID = 0;
+            try
+            {
+                User user = db.Users.Find(id);
+                user.Active = active;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                estado = true;
+
+            }
+            catch (Exception e) { ModelState.AddModelError("RECEIP_ERROR", e.Message); return new JsonResult() { Data = new { estado } }; }
+            return new JsonResult { Data = new { estado, ID = ReceipArticleID } };
+        }
         // GET: User/Delete/5
         public ActionResult Delete(string id)
         {
@@ -133,6 +152,8 @@ namespace RecepcionDeRadios.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             User user = db.Users.Find(id);
+            UserRolesMapping mapp = db.UserRolesMapping.Where(c => c.UserId == user.ID).FirstOrDefault();
+            db.UserRolesMapping.Remove(mapp);
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");

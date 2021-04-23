@@ -23,6 +23,14 @@ namespace RecepcionDeRadios.Models
         [Required]
         [DisplayName("Falla")]
         public string ReportedFailure { get; set; }
+        [DisplayName("Fecha de entrega al usuario")]
+        public DateTime? FechaEntregaUsuario { get; set; }
+        [DisplayName("Fecha de entrega al proveedor")]
+        public DateTime? FechaEntregaProveedor { get; set; }
+        [DisplayName("Pase de salida")]
+        public string PaseSalida { get; set; }
+        [DisplayName("Folio de baja")]
+        public string FolioBaja { get; set; }
         [DisplayName("Estatus")]
         public int Status { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
