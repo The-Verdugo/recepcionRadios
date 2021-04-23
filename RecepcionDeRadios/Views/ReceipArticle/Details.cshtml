@@ -58,9 +58,8 @@
         </div>
         <div class="col-md-12 col-lg-12">
             <a href="javascript:history.back();" class="btn btn-default"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> |
-            <a href="@Url.Action("Edit",new {id = Model.ID })" class="btn btn-warning">Editar Recepción <span class="glyphicon glyphicon-pencil"></span></a> |
-            <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Print Ticket <i class="fas fa-print"></i></a> |
-            <a href="@Url.Action("Print",new {id = Model.ID })" class="btn btn-danger" target="_blank">PDF <i class="fas fa-file-pdf"></i></a>
+            <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Imprimir Ticket <i class="fas fa-print"></i></a> |
+            <a href="@Url.Action("Print",new {id = Model.ID })" class="btn btn-danger" target="_blank">Generar PDF <i class="fas fa-file-pdf"></i></a>
         </div>
     </div>
 
