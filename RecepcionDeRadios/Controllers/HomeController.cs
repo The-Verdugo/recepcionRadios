@@ -16,7 +16,7 @@ namespace RecepcionDeRadios.Controllers
       
         public ActionResult Index()
         {
-            return RedirectToAction("create","receiparticle");
+            return RedirectToAction("watch","receiparticle");
         }
 
         public ActionResult Login()
@@ -55,11 +55,11 @@ namespace RecepcionDeRadios.Controllers
             return View();
         }
 
-        public void Logout()
+        public ActionResult Logout()
         {
             Session.Abandon();
             FormsAuthentication.SignOut();
-            FormsAuthentication.RedirectToLoginPage();
+            return RedirectToAction("watch", "receiparticle");
             //return View();
         }
     }

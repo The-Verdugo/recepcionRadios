@@ -40,7 +40,7 @@
                 @Html.DisplayFor(model => model.fechaRecibido)
             </dd>
         </div>
-        <div class="panel panel-default col-lg-6">
+        @*<div class="panel panel-default col-lg-6">
             <dt>
                 @Html.DisplayNameFor(model => model.fechaEntregado)
             </dt>
@@ -55,7 +55,7 @@
                 }
 
         
-        </div>
+        </div>*@
         <div class="col-md-12 col-lg-12">
             <a href="javascript:history.back();" class="btn btn-default"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> |
             <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Imprimir Ticket <i class="fas fa-print"></i></a> |

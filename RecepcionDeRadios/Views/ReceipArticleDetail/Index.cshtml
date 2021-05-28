@@ -19,12 +19,13 @@
         <div id="FolioSalida" class="form-group" style="display:none;">
             <input type="text" class="form-control" placeholder="Folio de pase de salida" name="PaseSalida" id="PaseSalida" />
             <a href="#" id="btnSendID" class="btn btn-success">Agregar <i class="fas fa-plus-circle"></i></a>
+            <label id="contadorArticulos"> 0 Articulos seleccionados</label>
         </div>
     </p>
 </div>
 <table class="table table-striped">
     <tr>
-        <th></th>
+        <th style="text-align:center; vertical-align:middle;">Todos <input type="checkbox" id="selectall"></th>
         <th>
             @Html.DisplayNameFor(model => model.ArticleID)
         </th>
@@ -50,7 +51,7 @@
             cont++;
 
             <tr>
-                <td><input type="checkbox" id="Authorized" name="checks[]" value="@item.Id" /></td>
+                <td style="text-align:center; vertical-align:middle;"><input type="checkbox" id="Authorized" name="checks[]" value="@item.Id" /></td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ArticleID)
                 </td>

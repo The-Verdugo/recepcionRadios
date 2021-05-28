@@ -6,6 +6,7 @@
 
 @section Styles {
     <link href="@Url.Content("~/Content/login.css")" rel="stylesheet" type="text/css" />
+
 }
 
 <!-- Main Content -->
@@ -20,7 +21,9 @@
     }
     <div class="row main-content bg-success text-center">
         <div class="col-md-5 col-lg-4 col-sm-4 col-xs-5 text-center company__info">
-            <img class="img-responsive" src="https://grupovidantarh.files.wordpress.com/2017/02/cropped-logo-grupo-vidanta-plano-02-11.png" />
+
+            <img class="img-responsive" src="/Resources/logo.png" /> <br />
+            <img class="img-responsive" id="imgr2" src="/Resources/logo2.png" />
         </div>
         <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
             <div class="container-fluid">
@@ -46,7 +49,13 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    var angulo = 0;
+    setInterval(function () {
+        angulo += 3;
+        $("#imgr2").css('transform', 'rotate(' + angulo + 'deg)');
+    }, 60);
+</script>
 
 
 @section Scripts {
