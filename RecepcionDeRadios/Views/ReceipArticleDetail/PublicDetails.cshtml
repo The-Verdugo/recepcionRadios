@@ -1,0 +1,109 @@
+﻿@model RecepcionDeRadios.Models.ReceipArticleDetail
+@section Styles {
+    <link href="@Url.Content("~/Content/Comments.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estatus.css")" rel="stylesheet" type="text/css" />
+}
+<div class="container">
+    <dl class="col-md-6 col-lg-6 col-sm-12">
+        <h3>Detalles del Articulo</h3>
+        <hr />
+        <div class="panel panel-default col-lg-12">
+            <dt>
+                @Html.DisplayNameFor(model => model.ReceipArticle.usuarioRecibe)
+            </dt>
+
+            <dd>
+                @ViewBag.USER.Name
+            </dd>
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.ArticleID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ArticleID)
+            </dd>
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            @switch (Model.Status)
+            {
+                case 1:
+                    <dd class="lbl-recibidoD">Recibido <i class="fas fa-clipboard-check"></i></dd>
+;
+                    break;
+                case 2:
+                    <dd class="lbl-entregadoPD">Entregado al proveedor <i class="fas fa-clock"></i></dd>
+;
+                    break;
+                case 3:
+                    <dd class="lbl-reparadoD">Reparado <i class="far fa-check-square"></i></dd>
+;
+                    break;
+                case 4:
+                    <dd class="lbl-bajaD">Baja <i class="fas fa-window-close"></i></dd>
+;
+                    break;
+                case 5:
+                    <dd class="lbl-entregadoUD">Entregado a usuario <i class="fas fa-check-square"></i></dd>
+;
+                    break;
+                default:
+                    <dd class="lbl-noneD">Estatus no disponible <i class="far fa-circle"></i></dd>
+;
+                    break;
+            }
+
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.ReportedFailure)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ReportedFailure)
+            </dd>
+        </div>
+        <div class="panel panel-default col-lg-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+
+            </dd>
+        </div>
+        <div class="col-md-12 col-lg-12">
+            <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+        </div>
+ 
+    </dl>
+    <div class="col-md-6 col-lg-6 col-sm-12">
+        <h3>Comentarios</h3>
+        <hr />
+        <ul id="comment-list" class="comment-list col-sm-12">
+            @foreach (var comment in Model.Comments)
+            {
+                <li>
+                    <div class="comment-box">
+                        <div class="comment-head">
+                            <dt class="comment-name">@Html.DisplayFor(modelItem => comment.Username)</dt>
+                            <span class="comment-label">Comentó</span>
+                            <span class="comment-subject">@Html.DisplayFor(modelItem => comment.Subject)</span>
+                        </div>
+                        <div class="comment-content">
+                            <dd>@Html.DisplayFor(modelItem => comment.Content)</dd>
+                            <span class="comment-label">@Html.DisplayFor(modelItem => comment.fecha)</span>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

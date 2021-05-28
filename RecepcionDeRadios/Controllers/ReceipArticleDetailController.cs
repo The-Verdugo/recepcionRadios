@@ -21,6 +21,7 @@ namespace RecepcionDeRadios.Controllers
     {
         private RecepcionDeRadiosContext db = new RecepcionDeRadiosContext();
         // GET: ReceipArticleDetail
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.ReceipArticleDetails.ToList());
@@ -43,12 +44,29 @@ namespace RecepcionDeRadios.Controllers
             return View(receipArticleDetail);
         }
 
+        public ActionResult PublicDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ReceipArticleDetail receipArticleDetail = db.ReceipArticleDetails.Find(id);
+            if (receipArticleDetail == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.USER = db.Users.Single(b => b.ID == receipArticleDetail.ReceipArticle.usuarioRecibe);
+            ViewBag.IdArticle = id;
+            return View(receipArticleDetail);
+        }
+
         // GET: ReceipArticleDetail/Create
         public ActionResult Create()
         {
             ViewBag.ReceipArticleID = new SelectList(db.ReceipArticles, "Id", "usuarioRecibe");
             return View();
         }
+
         [HttpPost]
         public JsonResult PaseSalida(string[] articlesid,string folio)
         {

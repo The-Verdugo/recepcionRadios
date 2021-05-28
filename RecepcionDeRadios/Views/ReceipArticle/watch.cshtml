@@ -74,7 +74,7 @@
             </tr>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr style="cursor:pointer;" onclick="window.location='@Url.Action("publicdetails", new { id= item.ID })'">
                     <td>@Html.DisplayFor(modelItem => item.ID)</td>
                     <td>@Html.DisplayFor(modelItem => item.ReceipArticleDetails.Count)</td>
                     <td>@Html.DisplayFor(modelItem => item.fechaRecibido)</td>

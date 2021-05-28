@@ -11,43 +11,34 @@
     @Html.AntiForgeryToken()
     <h2>Listado de recepción de articulos</h2>
     <div class="form-group form-inline">
-        <div class="col-lg-5 col-md-5 col-xs-5">
-            <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
-            <a href="@Url.Action("Export","ReceipArticleDetail")" class="btn btn-success excel" target="_blank">Exportar Datos a Excel <i class="fas fa-file-excel"></i></a>
-        </div>
-        <div class="col-lg-7 col-md-7 col-xs-7">
+        <div class="col-lg-6 col-md-6 col-xs-6">
             <p>
-                @if (ViewBag.All)
-                {
-                    <select id="criterio" name="criterio" class="form-control">
-                        <option value="1" selected>Folio</option>
-                        <option value="2">No de Colaborador</option>
-                    </select>
-                    <input type="text" class="form-control" placeholder="Busqueda" name="dato" id="dato" value='@ViewBag.Colab' />
-                    <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
-                }
-                else
-                {
-                    <a href="@Url.Action("Index")" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Recargar Todo"><i class="fas fa-sync-alt"></i></a>
-                    if (ViewBag.Find)
-                    {
-                        <select id="criterio" name="criterio" class="form-control">
-                            <option value="1" selected>Folio</option>
-                            <option value="2">No de Colaborador</option>
-                        </select>
-                    }
-                    else
-                    {
-                        <select id="criterio" name="criterio" class="form-control">
-                            <option value="1">Folio</option>
-                            <option value="2" selected>No de Colaborador</option>
-                        </select>
-                    }
-
-                    <input type="text" class="form-control" placeholder="Busqueda por Colaborador" name="dato" id="dato" value='@ViewBag.Colab' />
-                    <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
-                }
+                <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+                <a href="@Url.Action("Export","ReceipArticleDetail")" class="btn btn-success excel" target="_blank">Exportar Datos a Excel <i class="fas fa-file-excel"></i></a>
             </p>
+        </div>
+        <div class="well col-lg-12 col-md-12 col-xs-12">
+            <center><h4>BUSQUEDA</h4></center>
+            <p>
+               
+                    <div class="input-group col-lg-3">
+                        <div class="input-group-addon">Folio</div>
+                        <input type="text" class="form-control ocult" name="Folio" id="Folio" value="@ViewBag.Folio" placeholder="Folio de recepción">
+                    </div>
+                    <div class="input-group col-lg-3">
+                        <div class="input-group-addon">Colaborador</div>
+                        <input type="text" class="form-control" id="colaborador" name="colaborador" value="@ViewBag.Busqueda" placeholder="Numero de colaborador">
+                    </div>
+                    <div class="input-group col-lg-2">
+                        <div class="input-group-addon">Desde</div>
+                        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="@ViewBag.Inicio">
+                    </div>
+                    <div class="input-group col-lg-2">
+                        <div class="input-group-addon">Hasta</div>
+                        <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="@ViewBag.Fin">
+                    </div>
+            </p>
+            <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
         </div>
     </div>
     <table id="tableReceip" class="table table-hover">
@@ -99,8 +90,8 @@
                     </td>
                 }*@
                 <td>
-                    <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs">Detalles <span class="glyphicon glyphicon-info-sign"></span></a> |
-                    <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs">Eliminar <span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="left" title="Más detalles"></span></a> |
+                    <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="right" title="Eliminar"></span></a>
                 </td>
             </tr>
         }

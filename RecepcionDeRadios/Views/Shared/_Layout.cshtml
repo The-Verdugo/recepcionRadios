@@ -21,9 +21,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@Url.Action("Index","Home")" style="margin:auto; vertical-align:auto; align-content:center;">
-                    <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="https://aclara.mx/img/clientes/vidanta_blanco.png">
-                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="navbar-brand" href="@Url.Action("create","receiparticle")" style="margin:auto; vertical-align:auto; align-content:center;">
+                        <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="https://aclara.mx/img/clientes/vidanta_blanco.png">
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-brand" href="@Url.Action("Index","Home")" style="margin:auto; vertical-align:auto; align-content:center;">
+                        <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="https://aclara.mx/img/clientes/vidanta_blanco.png">
+                    </a>
+                }
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
