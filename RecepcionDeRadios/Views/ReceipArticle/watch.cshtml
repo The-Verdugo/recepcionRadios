@@ -1,0 +1,118 @@
+﻿@model IEnumerable<RecepcionDeRadios.Models.ReceipArticle>
+
+@{
+    ViewBag.Title = "Public Search";
+}
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <center><h2>Consulta de estatus de reparación</h2></center>
+        <div class="form-inline">
+            <div class="well col-md-12 col-sm-12 col-lg-12">
+                <div class="col-md-12 col-lg-12 col-xs-12">
+                    <center>
+                        <div class="form-group col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">Folio</div>
+                                <input type="text" class="form-control ocult" name="Folio" id="Folio" value="@ViewBag.Folio" placeholder="Folio de recepción">
+                            </div>
+                            <button type="submit" class="btn btn-primary ocult">Buscar <i class="fas fa-search"></i></button>
+                            <a href="#" id="more" class="btn btn-link">Busqueda Avanzada <i id="iconmore" class="fas fa-caret-down"></i></a>
+                        </div>
+                    </center>
+                </div>
+                <div class="col-lg-12 form-horizontal more" style="display:none;">
+                    <p><center><h4>Busqueda avanzada</h4></center></p>
+                    <div class="well col-lg-12">
+                        <p><center><h5 style="color:grey;">Filtrar por colaborador</h5></center></p>
+                        <center>
+                            <div class="form-group col-lg-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">Colaborador</div>
+                                    <input type="text" class="form-control" id="colaborador" name="colaborador" value="@ViewBag.Busqueda" placeholder="Numero de colaborador">
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="well col-lg-12">
+                        <p><center><h5 style="color:grey;">Filtrar por fecha</h5></center></p>
+                        <center>
+                            <div class="form-group col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">Desde</div>
+                                    <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="@ViewBag.Inicio">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">Hasta</div>
+                                    <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="@ViewBag.Fin">
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 col-lg-4 col-sm-4 more" style="display:none;">
+                    <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@if (!string.IsNullOrEmpty(ViewBag.Busqueda) || !string.IsNullOrEmpty(ViewBag.Folio)|| !string.IsNullOrEmpty(ViewBag.Fin) || !string.IsNullOrEmpty(ViewBag.Inicio))
+{
+    <div class="table-responsive" id="datos">
+        <table class="table table-hover">
+            <tr>
+                <th>Folio</th>
+                <th>No. de articulos</th>
+                <th>Fecha de recepción</th>
+                <th>Colaborador que entrega</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ReceipArticleDetails.Count)</td>
+                    <td>@Html.DisplayFor(modelItem => item.fechaRecibido)</td>
+                    <td>@Html.DisplayFor(modelItem => item.empleadoEntrega)</td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+<script type="text/javascript">
+    var visible = false;
+    $(function () {
+        $('#more').click(function () {
+            if (visible) {
+                $('#colaborador').val("");
+                $('#fechaInicio').val("");
+                $('#fechaFin').val("");
+                $('#iconmore').removeClass("fa-times");
+                $('#iconmore').addClass("fa-seach");
+                $('.ocult').each(function () {
+                    $(this).attr('disabled', false);
+                });
+                $('.more').each(function () {
+                    $(this).hide();
+                });
+                visible = false;
+            } else {
+                $('#iconmore').removeClass("fa-seach");
+                $('#iconmore').addClass("fa-times");
+                $('.ocult').each(function () {
+                    $(this).attr('disabled', true);
+                });
+                $('.more').each(function () {
+                    $(this).show();
+                });
+                visible = true;
+            }
+        });
+    });
+</script>

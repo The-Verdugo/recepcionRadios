@@ -1,13 +1,36 @@
 ﻿var arr = null;
 var folioinputval = false;
 $(document).ready(function () {
-    //Agrega los checkbox seleccionados a un arreglo
-    $('[name="checks[]"]').click(function () {
 
+    //Agrega los checkbox seleccionados a un arreglo
+
+    $("#selectall").on("click", function () {
+        $('#contadorArticulos').empty();
+        $('[name="checks[]"]').prop("checked", this.checked);
+        $('[name="checks[]"]').each(function () {
+            if (this.checked) {
+                arr = $('[name="checks[]"]:checked').map(function () {
+                    return this.value;
+                }).get();
+            }
+        }); 
+
+        $('#contadorArticulos').append($('[name="checks[]"]:checked').length + " Articulos Seleccionados");
+    });
+
+
+    $('[name="checks[]"]').click(function () {
+        $('#contadorArticulos').empty();
         arr = $('[name="checks[]"]:checked').map(function () {
             return this.value;
         }).get();
 
+        if ($('[name="checks[]"]').length == $('[name="checks[]"]:checked').length) {
+            $("#selectall").prop("checked", true);
+        } else {
+            $("#selectall").prop("checked", false);
+        }
+        $('#contadorArticulos').append($('[name="checks[]"]:checked').length + " Articulos Seleccionados");
     });
 
     $('#GenerarPase').click(function () {

@@ -64,9 +64,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.fechaRecibido)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.fechaEntregado)
-            </th>
+            </th>*@
             <th></th>
         </tr>
 
@@ -86,7 +86,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.fechaRecibido)
                 </td>
-                @if (item.fechaRecibido == item.fechaEntregado)
+                @*@if (item.fechaRecibido == item.fechaEntregado)
                 {
                     <td>
                         <p>Sin entregar</p>
@@ -97,7 +97,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.fechaEntregado)
                     </td>
-                }
+                }*@
                 <td>
                     <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs">Detalles <span class="glyphicon glyphicon-info-sign"></span></a> |
                     <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs">Eliminar <span class="glyphicon glyphicon-trash"></span></a>

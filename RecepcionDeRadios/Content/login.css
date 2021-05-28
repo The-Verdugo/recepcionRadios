@@ -95,3 +95,31 @@ form {
         border: 1px solid #cecece;
     }
 
+
+
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+
+.imgr2 {
+    -webkit-animation-direction: reverse;
+    animation-direction: reverse;
+}

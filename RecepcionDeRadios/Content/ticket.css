@@ -1,14 +1,15 @@
 ﻿
 .container{
-    margin: auto;
+    margin:auto;
     width: 76mm;
     text-align: center;
     align-content: center;
     align-items: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.tabla{
-    margin: auto;
+.tabla {
+    margin: 0 auto;
+    text-align: left;
 }
 .articles{
     margin-top: 1px;
@@ -20,4 +21,15 @@
 .ticket-data {
     font-size: 11px !important;
 }
-
+hr {
+    margin: 0 auto;
+    text-align: left;
+}
+th {
+font-size:13px;
+}
+td {
+    margin: 0 auto;
+    text-align: left;
+    font-size: 11.8px;
+}
