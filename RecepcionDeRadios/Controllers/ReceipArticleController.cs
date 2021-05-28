@@ -4,6 +4,7 @@ using Rotativa.Options;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -21,6 +22,93 @@ namespace RecepcionDeRadios.Controllers
         {
             ViewBag.All = true;
             return View(db.ReceipArticles.ToList());
+        }
+
+        public ActionResult Watch() 
+        {
+            ViewBag.All = true;
+            return View(db.ReceipArticles.ToList());
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<ActionResult> Watch(int? colaborador, int? Folio, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+
+            
+            if (!String.IsNullOrEmpty(Folio.ToString()))
+            {
+                ViewBag.Folio = Folio.ToString();
+                return View(await db.ReceipArticles.Where(c => c.ID.ToString().Contains(Folio.ToString())).ToListAsync());
+            } else if (!String.IsNullOrEmpty(colaborador.ToString()))
+            {
+                if (!String.IsNullOrEmpty(fechaInicio.ToString()))
+                {
+                    if (!String.IsNullOrEmpty(fechaFin.ToString()))
+                    {
+                        DateTime inicio = Convert.ToDateTime(fechaInicio), fin = Convert.ToDateTime(fechaFin);
+                        var model = from p in db.ReceipArticles where DbFunctions.TruncateTime(p.fechaRecibido) >= inicio.Date && DbFunctions.TruncateTime(p.fechaRecibido) <= fin.Date && p.empleadoEntrega.Contains(colaborador.ToString()) select p;
+                        ViewBag.Fin = fin.ToString("yyyy-MM-dd");
+                        ViewBag.Inicio = inicio.ToString("yyyy-MM-dd");
+                        ViewBag.Busqueda = colaborador.ToString();
+                        return View(await model.ToListAsync());
+                    }
+                    else { 
+                        DateTime inicio = Convert.ToDateTime(fechaInicio);
+                        var model = from p in db.ReceipArticles where DbFunctions.TruncateTime(p.fechaRecibido) >= inicio.Date && p.empleadoEntrega.Contains(colaborador.ToString()) select p;
+                        ViewBag.Inicio = inicio.ToString("yyyy-MM-dd");
+                        ViewBag.Busqueda = colaborador.ToString();
+                        return View(await model.ToListAsync());
+                    }
+                }
+                else 
+                {
+                    if (!String.IsNullOrEmpty(fechaFin.ToString()))
+                    {
+                        DateTime fin = Convert.ToDateTime(fechaFin);
+                        var model = from p in db.ReceipArticles where DbFunctions.TruncateTime(p.fechaRecibido) <= fin.Date && p.empleadoEntrega.Contains(colaborador.ToString()) select p;
+                        ViewBag.Fin = fin.ToString("yyyy-MM-dd");
+                        ViewBag.Busqueda = colaborador.ToString();
+                        return View(await model.ToListAsync());
+                    }
+                    else
+                    {
+                        ViewBag.Busqueda = colaborador.ToString();
+                        return View(await db.ReceipArticles.Where(c => c.empleadoEntrega.ToString().Contains(colaborador.ToString())).ToListAsync());
+                    }
+                    
+                }
+               
+            }
+            else if (!String.IsNullOrEmpty(fechaInicio.ToString()))
+            {
+                if (!String.IsNullOrEmpty(fechaFin.ToString()))
+                {
+                    DateTime inicio = Convert.ToDateTime(fechaInicio), fin = Convert.ToDateTime(fechaFin);
+                    var model = from p in db.ReceipArticles where DbFunctions.TruncateTime(p.fechaRecibido) >= inicio.Date && DbFunctions.TruncateTime(p.fechaRecibido) <= fin.Date select p;
+                    ViewBag.Inicio = inicio.ToString("yyyy-MM-dd");
+                    ViewBag.Fin = fin.ToString("yyyy-MM-dd");
+                    return View(await model.ToListAsync());
+                }
+                else
+                {
+                    DateTime inicio = Convert.ToDateTime(fechaInicio);
+                    var model = from p in db.ReceipArticles where DbFunctions.TruncateTime(p.fechaRecibido) >= inicio.Date select p;
+                    ViewBag.Inicio = inicio.ToString("yyyy-MM-dd");
+                    return View(await model.ToListAsync());
+                }
+                
+            }
+            else if (!String.IsNullOrEmpty(fechaFin.ToString()))
+            {
+                    DateTime Fin = Convert.ToDateTime(fechaFin);
+                    var model = from p in db.ReceipArticles where DbFunctions.TruncateTime(p.fechaRecibido) <= Fin.Date select p;
+                    ViewBag.Fin = Fin.ToString("yyyy-MM-dd");
+                    return View(await model.ToListAsync());
+
+            }
+
+            return View();
         }
 
         [Authorize]

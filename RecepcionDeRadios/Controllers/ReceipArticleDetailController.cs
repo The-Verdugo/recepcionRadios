@@ -114,7 +114,7 @@ namespace RecepcionDeRadios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status,Description,ReportedFailure,FechaEntregaUsuario,FechaEntregaProveedor,PaseSalida,FolioBaja")] ReceipArticleDetail receipArticleDetail)
         {
-            
+                
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.BOOL = true;

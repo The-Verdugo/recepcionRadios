@@ -74,7 +74,7 @@
     max-width: 250px;
 }
 .article-preview-entregadoU {
-    background: url("~/Resources/ok.png") no-repeat center, linear-gradient(100deg, rgb(104, 219, 110) 10%, rgb(87, 218, 36) 100%);
+    background: url("/Resources/ok.png") no-repeat center, linear-gradient(100deg, rgb(104, 219, 110) 10%, rgb(87, 218, 36) 100%);
     background-size: contain;
     opacity: 20;
     color: rgb(255, 255, 255);
