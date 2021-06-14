@@ -25,7 +25,7 @@ namespace RecepcionDeRadios.Models
         [DisplayName("Fecha de recepción")]
         public DateTime fechaRecibido { get; set; }
         [DisplayName("Fecha de entrega")]
-        public DateTime fechaEntregado { get; set; }
+        public DateTime? fechaEntregado { get; set; }
         public virtual ICollection<ReceipArticleDetail> ReceipArticleDetails { get; set; }
     }
 }

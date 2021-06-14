@@ -6,101 +6,148 @@
 @section Styles {
     <link href="@Url.Content("~/Content/Comments.css")" rel="stylesheet" type="text/css" />
 }
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <h2>Listado de recepción de articulos</h2>
-    <div class="form-group form-inline">
-        <div class="col-lg-6 col-md-6 col-xs-6">
-            <p>
-                <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
-                <a href="@Url.Action("Export","ReceipArticleDetail")" class="btn btn-success excel" target="_blank">Exportar Datos a Excel <i class="fas fa-file-excel"></i></a>
-            </p>
-        </div>
-        <div class="well col-lg-12 col-md-12 col-xs-12">
-            <center><h4>BUSQUEDA</h4></center>
-            <p>
-               
-                    <div class="input-group col-lg-3">
-                        <div class="input-group-addon">Folio</div>
-                        <input type="text" class="form-control ocult" name="Folio" id="Folio" value="@ViewBag.Folio" placeholder="Folio de recepción">
-                    </div>
-                    <div class="input-group col-lg-3">
-                        <div class="input-group-addon">Colaborador</div>
-                        <input type="text" class="form-control" id="colaborador" name="colaborador" value="@ViewBag.Busqueda" placeholder="Numero de colaborador">
-                    </div>
-                    <div class="input-group col-lg-2">
-                        <div class="input-group-addon">Desde</div>
-                        <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="@ViewBag.Inicio">
-                    </div>
-                    <div class="input-group col-lg-2">
-                        <div class="input-group-addon">Hasta</div>
-                        <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="@ViewBag.Fin">
-                    </div>
-            </p>
-            <button type="submit" class="btn btn-primary">Buscar <i class="fas fa-search"></i></button>
-        </div>
-    </div>
-    <table id="tableReceip" class="table table-hover">
-        <tr>
-            <th>
-                Folio
-            </th>
-            <th>
-                Articulos Recibidos
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.empleadoEntrega)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.fechaRecibido)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.fechaEntregado)
-            </th>*@
-            <th></th>
-        </tr>
+<style>
+    #tableReceip tfoot input {
+        width: 100% !important;
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr style="cursor:pointer;" onclick="window.location='@Url.Action("Details", new { id=item.ID })'">
-                <td>
-                    #
-                    @Html.DisplayFor(modelItem => item.ID)
-                </td>
-                <td>
-                    <span class="badge">@item.ReceipArticleDetails.Count</span>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.empleadoEntrega)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.fechaRecibido)
-                </td>
-                @*@if (item.fechaRecibido == item.fechaEntregado)
+    #tableReceip tfoot {
+        display: table-header-group !important;
+    }
+
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <h2>Listado de recepción de articulos</h2>
+        <div class="form-group form-inline">
+            <div class="col-lg-6 col-md-6 col-xs-6">
+                <p>
+                    <a href="@Url.Action("Create")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Crear Nuevo</a>
+                    <a href="@Url.Action("Export","ReceipArticleDetail")" class="btn btn-success excel" target="_blank">Exportar Datos a Excel <i class="fas fa-file-excel"></i></a>
+                </p>
+            </div>
+            <div class="well col-lg-12 col-md-12 col-xs-12">
+                    <center><h5>Filtrar por fechas</h5></center>
+                    <center>
+                        <p>
+                            <div class="input-group col-lg-2">
+                                <div class="input-group-addon">Desde</div>
+                                <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" value="@ViewBag.Inicio">
+                            </div>
+                            <div class="input-group col-lg-2">
+                                <div class="input-group-addon">Hasta</div>
+                                <input type="date" class="form-control" id="fechaFin" name="fechaFin" value="@ViewBag.Fin">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Filtrar <i class="fas fa-search"></i></button>
+                        </p>
+                    </center>
+                </div>
+        </div>
+        <table id="tableReceip" class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Folio
+                    </th>
+                    <th>
+                        Articulos Recibidos
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.empleadoEntrega)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.fechaRecibido)
+                    </th>
+                    @*<th>
+                    @Html.DisplayNameFor(model => model.fechaEntregado)
+                </th>*@
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Folio</th>
+                    <th>Articulos Recibidos</th>
+                    <th>@Html.DisplayNameFor(model => model.empleadoEntrega)</th>
+                    <th>@Html.DisplayNameFor(model => model.fechaRecibido)</th>
+                    <th></th>
+
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    <td>
-                        <p>Sin entregar</p>
-                    </td>
+                    <tr style="cursor:pointer;" onclick="window.location='@Url.Action("Details", new { id=item.ID })'">
+                        <td style="text-align:center;">
+                            @Html.DisplayFor(modelItem => item.ID)
+                        </td>
+                        <td style="text-align:center;">
+                            <span class="badge">@item.ReceipArticleDetails.Count</span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.empleadoEntrega)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fechaRecibido)
+                        </td>
+                        @*@if (item.fechaRecibido == item.fechaEntregado)
+                    {
+                        <td>
+                            <p>Sin entregar</p>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fechaEntregado)
+                        </td>
+                    }*@
+                        <td>
+                            <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="left" title="Más detalles"></span></a> |
+                            <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="right" title="Eliminar"></span></a>
+                        </td>
+                    </tr>
                 }
-                else
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fechaEntregado)
-                    </td>
-                }*@
-                <td>
-                    <a href="@Url.Action("Details", new { id=item.ID })" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="left" title="Más detalles"></span></a> |
-                    <a href="@Url.Action("Delete", new { id=item.ID })" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" data-toggle="tooltip" data-placement="right" title="Eliminar"></span></a>
-                </td>
-            </tr>
-        }
+            </tbody>
+        </table>
 
-    </table>
-
-}
-<script type="text/javascript">
+    }
+</div>
+<script type="text/javascript" >
     $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
+        $('#tableReceip tfoot th').each(function () {
+            var title = $(this).text();
+            if (title.length <= 0) {
+                $(this).html('<input type="text" id="filter" class="form-control" style="display:none;" placeholder="Filtrar ' + title + '" />');
+            } else {
+                $(this).html('<input type="text" id="filter" class="form-control" placeholder="Filtrar ' + title + '" />');
+            }
+        });
+        $('#tableReceip').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }, initComplete: function () {
+                // Apply the search
+                this.api().columns().every(function () {
+                    var that = this;
+
+                    $('#filter', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+        
+       
     })
 </script>

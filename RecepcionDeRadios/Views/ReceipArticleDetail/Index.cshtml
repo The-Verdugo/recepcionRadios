@@ -6,78 +6,206 @@
 }
 @section Styles {
     <link href="@Url.Content("~/Content/ReceipDetailIndex.css")" rel="stylesheet" type="text/css" />
+    
 }
+<style>
+    #Articulos tfoot input {
+        width: 100% !important;
+    }
 
-<h2>Artículos Recibidos</h2>
-<div id="alertsDetails"></div>
-<div class="form-inline">
-    <p>
-        <div class="form-group">
-            <a href="@Url.Action("Create","ReceipArticle")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Nuevo</a>
-            <a id="GenerarPase" class="btn btn-primary">Agregar Pase de salida <i class="fas fa-plus-circle"></i></a>
+    #Articulos tfoot {
+        display: table-header-group !important;
+    }
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+<div class="container">
+    <div class="col-lg-12">
+        <h2>Artículos Recibidos</h2>
+        <div id="alertsDetails"></div>
+        <div class="form-inline">
+            <p>
+                <div class="form-group">
+                    <a href="@Url.Action("Create","ReceipArticle")" class="btn btn-success"><i class="fas fa-plus-circle"></i> Nuevo</a>
+                    <a id="GenerarPase" class="btn btn-primary">Agregar Pase de salida <i class="fas fa-plus-circle"></i></a>
+                </div>
+                <div id="FolioSalida" class="form-group" style="display:none;">
+                    <input type="text" class="form-control" placeholder="Folio de pase de salida" name="PaseSalida" id="PaseSalida" />
+                    <a href="#" id="btnSendID" class="btn btn-success">Agregar <i class="fas fa-plus-circle"></i></a>
+                    <label id="contadorArticulos"></label>
+                </div>
+            </p>
         </div>
-        <div id="FolioSalida" class="form-group" style="display:none;">
-            <input type="text" class="form-control" placeholder="Folio de pase de salida" name="PaseSalida" id="PaseSalida" />
-            <a href="#" id="btnSendID" class="btn btn-success">Agregar <i class="fas fa-plus-circle"></i></a>
-            <label id="contadorArticulos"> 0 Articulos seleccionados</label>
-        </div>
-    </p>
-</div>
-<table class="table table-striped">
-    <tr>
-        <th style="text-align:center; vertical-align:middle;">Todos <input type="checkbox" id="selectall"></th>
-        <th>
-            @Html.DisplayNameFor(model => model.ArticleID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReportedFailure)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th style="text-align:center;">
-            Folio de recepción
-        </th>
-        <th></th>
-    </tr>
+        <table id="Articulos" class="table table-responsive table-striped table-hover">
+            <thead>
+                <tr>
+                    @*<th style="text-align:center; vertical-align:middle;">Todos <input type="checkbox" id="selectall"></th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.ArticleID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReportedFailure)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th style="text-align:center;">
+                        Folio de recepción
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ArticleID)</th>
+                    <th>@Html.DisplayNameFor(model => model.Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.ReportedFailure)</th>
+                    <th></th>
+                    <th>Folio de recepción</th>
+                    <th></th>
+                   
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.Status == 1)
+                    {
+                        cont++;
 
-    @foreach (var item in Model)
-    {
-        if (item.Status == 1)
+                        <tr  id="@item.Id">
+                            @*<td style="text-align:center; vertical-align:middle;"><input type="checkbox" id="Authorized" name="checks[]" value="@item.Id" /></td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ArticleID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReportedFailure)
+                            </td>
+                            <td>
+                                <p>Recibido</p>
+                            </td>
+                            <td style="text-align:center;">
+                                <a href="@Url.Action("Details","ReceipArticle", new { id=item.ReceipArticleID })"><span class="badge badgeindex">@Html.DisplayFor(modelItem => item.ReceipArticleID)</span></a>
+                            </td>
+                            <td>
+
+                                <a href="@Url.Action("Details", new { id=item.Id })" class="btn btn-info btn-xs">Más Detalles <span class="glyphicon glyphicon-info-sign"></span></a>
+
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+        @if (cont == 0)
         {
-            cont++;
-
-            <tr>
-                <td style="text-align:center; vertical-align:middle;"><input type="checkbox" id="Authorized" name="checks[]" value="@item.Id" /></td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ArticleID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReportedFailure)
-                </td>
-                <td>
-                    <p>Recibido</p>
-                </td>
-                <td style="text-align:center;">
-                    <a href="@Url.Action("Details","ReceipArticle", new { id=item.ReceipArticleID })"><span class="badge badgeindex">#@Html.DisplayFor(modelItem => item.ReceipArticleID)</span></a>
-                </td>
-                <td>
-
-                    <a href="@Url.Action("Details", new { id=item.Id })" class="btn btn-info btn-xs">Más Detalles <span class="glyphicon glyphicon-info-sign"></span></a>
-
-                </td>
-            </tr>
-
+            <h4 style="text-align:center; color:grey;">Actualmente no existen artículos con estatus de 'Recibido'</h4>
         }
-    }
-</table>
-    @if (cont == 0)
-    {
-        <h4 style="text-align:center; color:grey;">Actualmente no existen artículos con estatus de 'Recibido'</h4>
-    }
+    </div>
+</div>
+<script type="text/javascript">
+    var folioinputval = false;
+    $(function () {
+        var selected = [];
+
+        $('#Articulos tfoot th').each(function () {
+            var title = $(this).text();
+            if (title.length <= 0) {
+                $(this).html('<input type="text" id="filter" class="form-control" style="display:none;" placeholder="Filtrar ' + title + '" />');
+            } else {
+                $(this).html('<input type="text" id="filter" class="form-control" placeholder="Filtrar ' + title + '" />');
+            }
+        });
+
+        $("#Articulos").DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            }, initComplete: function () {
+                // Apply the search
+                this.api().columns().every(function () {
+                    var that = this;
+
+                    $('#filter', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
+
+        
+
+        // DataTable
+      
+        $('#Articulos tbody').on('click', 'tr', function () {
+            var id = this.id;
+            var index = $.inArray(id, selected);
+
+            if (index === -1) {
+                selected.push(id);
+            } else {
+                selected.splice(index, 1);
+            }
+            $('#contadorArticulos').html(selected.length + " Articulos seleccionados")
+            console.log(selected);
+            $(this).toggleClass('success');
+        });
+        $('#GenerarPase').click(function () {
+            if (folioinputval) {
+                $('#FolioSalida').hide();
+                folioinputval = false;
+            } else {
+                $('#FolioSalida').show();
+                folioinputval = true;
+            }
+        });
+        $('#btnSendID').click(function () {
+            if ($('#PaseSalida').val().trim() == "") {
+                toastr.error("El campo no puede quedar vacio", "Error");
+                $('#PaseSalida').focus();
+            } else {
+                if (selected.length<=0) {
+                    toastr.error("Seleccione por lo menos un articulo para continuar", "Error");
+                } else {
+                    var articles = {
+                        folio: $('#PaseSalida').val().trim(),
+                        articlesid: selected
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/receiparticledetail/pasesalida',
+
+                        data: JSON.stringify(articles),
+
+                        contentType: 'application/json',
+                        success: function (Data) { //Respuesta afirmativa desde el controlador
+                            if (Data.estado) {//Comprobacion de que los datos fueron agregados
+                                alert("Pase de salida creado correctamente");
+                                location.reload();
+                            }
+                            else {//Error al agregar los datos
+                                alert("Ocurrio un error por favor verifique los datos");
+                            }
+                            $('#saveData').val('Guardar Cambios');
+                        },
+                        error: function (error) { //En caso de error en el controlador
+                            console.log(error.responseText);
+                            $('#saveData').val('Guardar Cambios');
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>

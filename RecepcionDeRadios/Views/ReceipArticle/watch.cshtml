@@ -31,7 +31,7 @@
                             <div class="form-group col-lg-12">
                                 <div class="input-group">
                                     <div class="input-group-addon">Colaborador</div>
-                                    <input type="text" class="form-control" id="colaborador" name="colaborador" value="@ViewBag.Busqueda" placeholder="Numero de colaborador">
+                                    <input type="search" class="form-control" id="colaborador" name="colaborador" value="@ViewBag.Busqueda" placeholder="Numero de colaborador">
                                 </div>
                             </div>
                         </center>
@@ -62,29 +62,30 @@
     }
 
 </div>
-@if (!string.IsNullOrEmpty(ViewBag.Busqueda) || !string.IsNullOrEmpty(ViewBag.Folio)|| !string.IsNullOrEmpty(ViewBag.Fin) || !string.IsNullOrEmpty(ViewBag.Inicio))
-{
-    <div class="table-responsive" id="datos">
-        <table class="table table-hover">
-            <tr>
-                <th>Folio</th>
-                <th>No. de articulos</th>
-                <th>Fecha de recepción</th>
-                <th>Colaborador que entrega</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-                <tr style="cursor:pointer;" onclick="window.location='@Url.Action("publicdetails", new { id= item.ID })'">
-                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ReceipArticleDetails.Count)</td>
-                    <td>@Html.DisplayFor(modelItem => item.fechaRecibido)</td>
-                    <td>@Html.DisplayFor(modelItem => item.empleadoEntrega)</td>
+<div class="container">
+    @if (!string.IsNullOrEmpty(ViewBag.Busqueda) || !string.IsNullOrEmpty(ViewBag.Folio) || !string.IsNullOrEmpty(ViewBag.Fin) || !string.IsNullOrEmpty(ViewBag.Inicio))
+    {
+        <div class="table-responsive" id="datos">
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>Folio</th>
+                    <th>No. de articulos</th>
+                    <th>Fecha de recepción</th>
+                    <th>Colaborador que entrega</th>
                 </tr>
-            }
-        </table>
-    </div>
-}
-
+                @foreach (var item in Model)
+                {
+            <tr style="cursor:pointer;" onclick="window.location='@Url.Action("publicdetails", new { id= item.ID })'">
+                <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                <span class="badge"><td>@Html.DisplayFor(modelItem => item.ReceipArticleDetails.Count)</td></span>
+                <td>@Html.DisplayFor(modelItem => item.fechaRecibido)</td>
+                <td>@Html.DisplayFor(modelItem => item.empleadoEntrega)</td>
+            </tr>
+                }
+            </table>
+        </div>
+    }
+</div>
 <script type="text/javascript">
     var visible = false;
     $(function () {

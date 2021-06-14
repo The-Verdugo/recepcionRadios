@@ -56,11 +56,18 @@
 
         
         </div>*@
-        <div class="col-md-12 col-lg-12">
-            <a href="javascript:history.back();" class="btn btn-default"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a> |
-            <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Imprimir Ticket <i class="fas fa-print"></i></a> |
-            <a href="@Url.Action("Print",new {id = Model.ID })" class="btn btn-danger" target="_blank">Generar PDF <i class="fas fa-file-pdf"></i></a>
-        </div>
+    <div class="col-md-12 col-lg-12">
+        @if (ViewBag.BOOL)
+        {
+            <a href="javascript:window.history.go(-3);" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+        }
+        else
+        {
+            <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+        }|
+        <a href="@Url.Action("PrintView",new {id = Model.ID })" class="btn btn-primary" target="_blank">Imprimir Ticket <i class="fas fa-print"></i></a> |
+        <a href="@Url.Action("Print",new {id = Model.ID })" class="btn btn-danger" target="_blank">Generar PDF <i class="fas fa-file-pdf"></i></a>
+    </div>
     </div>
 
     <div class="col-sm-12 col-md-6 col-lg-6">
@@ -129,7 +136,7 @@
                     default:<label class="lbl-none">Estatus no disponible <i class="far fa-circle"></i></label><br /> ;
                         break;
                 }
-                @Html.ActionLink("Actualizar Estatus", "Edit", "ReceipArticleDetail", new { id = item.Id, st = true }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Actualizar Estatus", "Edit", "ReceipArticleDetail", new { id = item.Id}, new { @class = "btn btn-warning btn-xs" })
                 @Html.ActionLink("Más Información", "Details", "ReceipArticleDetail", new { id = item.Id }, new { @class = "btn btn-info btn-xs" })
             </div>
         </div>

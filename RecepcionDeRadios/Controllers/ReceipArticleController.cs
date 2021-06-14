@@ -258,8 +258,15 @@ namespace RecepcionDeRadios.Controllers
         //Controlador de tipo GET para la vista de detalles con usuario logueado 
         [Authorize]
         // GET: ReceipArticle/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, bool obj= false)
         {
+            if (obj)
+            {
+                ViewBag.BOOL = obj;
+            }
+            else {
+                ViewBag.BOOL = obj;
+            }
             if (id == null) // Verificacion de que el parametro contenga un dato 
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //En caso que el parametro sea nulo se regresa un estado de error 

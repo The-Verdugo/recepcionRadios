@@ -132,12 +132,11 @@ namespace RecepcionDeRadios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status,Description,ReportedFailure,FechaEntregaUsuario,FechaEntregaProveedor,PaseSalida,FolioBaja")] ReceipArticleDetail receipArticleDetail)
         {
-                
                 db.Entry(receipArticleDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.BOOL = true;
 
-                return  RedirectToAction("Details","ReceipArticle", new { id=receipArticleDetail.ReceipArticleID});
+                return RedirectToAction("Details", "ReceipArticle", new { id = receipArticleDetail.ReceipArticleID, obj = true }); ;
             
         }
         
@@ -214,7 +213,8 @@ namespace RecepcionDeRadios.Controllers
                 rango.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center; //Alineamos horizontalmente
                 rango.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;  //Alineamos verticalmente
                 rango.Style.Font.FontSize = 15; //Indicamos el tamaño de la fuente
-                rango.Style.Fill.BackgroundColor = XLColor.AliceBlue; //Indicamos el color de background
+                rango.Style.Font.FontColor = XLColor.White;
+                rango.Style.Fill.BackgroundColor = XLColor.BlueGray; //Indicamos el color de background
                 worksheet.Columns(1, 8).AdjustToContents();
                 using (MemoryStream stream = new MemoryStream())
                 {

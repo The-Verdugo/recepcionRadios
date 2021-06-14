@@ -38,11 +38,9 @@
             contentType: 'application/json',
             success: function (Data) { //Respuesta afirmativa desde el controlador
                 if (Data.estado) {//Comprobacion de que los datos fueron agregados
-                    addAlertsSuccess("Ok");
                     location.reload();
                 }
                 else {//Error al agregar los datos
-                    addAlertsError("No");
                 }
             },
             error: function (error) { //En caso de error en el controlador

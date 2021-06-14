@@ -4,81 +4,103 @@
     ViewBag.Title = "Index";
     var nameuser = "";
 }
-<div class="container-fluid">
+<style>
+    
+
+    #usuarios tfoot {
+        display: table-header-group !important;
+    }
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+<div class="container">
     <h2>Listado de usuarios del sistema</h2>
 
     <p>
         <a href="@Url.Action("Create")" class="btn btn-success"><span class="glyphicon glyphicon-plus-sign"></span> Crear Nuevo</a>
     </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Level)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            if (User.Identity.Name != item.ID)
+    <table class="table" id="usuarios">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Level)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <th>@Html.DisplayNameFor(model => model.Username)</th>
+                <th>@Html.DisplayNameFor(model => model.Level)</th>
+                <th>@Html.DisplayNameFor(model => model.Active)</th>
+                <th></th>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Username)
-                    </td>
-                    @switch (item.Level)
-                    {
-                        case 1:
-                            <td>Administrador</td>
-                            ;
-                            break;
-                        case 2:
-                            <td>Técnico</td>
-                            ;
-                            break;
-                        default:
-                            break;
-                    }
-                    @switch (item.Active)
-                    {
-                        case 1:
-                            <td>Si</td>
-                            ;
-                            break;
-                        case 2:
-                            <td>No</td>
-                            ;
-                            break;
-                        default:
-                            break;
-                    }
-                    <td>
-                        <a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-warning btn-xs">Editar <i class="fas fa-pen"></i></a> |
-                        @if (item.Active.Equals(1))
+                if (User.Identity.Name != item.ID)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        @switch (item.Level)
                         {
-                            <button type="button" class="btn btn-danger btn-xs btnDisabled" data-toggle="modal" data-target="#myModal" id="@item.Name" name="@item.ID">Desactivar <i class="fas fa-user-slash"></i></button>
+                            case 1:
+                                <td>Administrador</td>
+                                ;
+                                break;
+                            case 2:
+                                <td>Técnico</td>
+                                ;
+                                break;
+                            default:
+                                break;
                         }
-                        else
+                        @switch (item.Active)
                         {
-                            <button type="button" class="btn btn-success btn-xs btnEnabled" data-toggle="modal" data-target="#myModalActive" id="@item.Name" name="@item.ID">Activar <i class="fas fa-user-check"></i></button>
+                            case 1:
+                                <td>Si</td>
+                                ;
+                                break;
+                            case 2:
+                                <td>No</td>
+                                ;
+                                break;
+                            default:
+                                break;
                         }
-                    </td>
-                </tr>
-            }
+                        <td>
+                            <a href="@Url.Action("Edit", new { id=item.ID })" class="btn btn-warning btn-xs"> <i class="fas fa-pen"></i></a> |
+                            @if (item.Active.Equals(1))
+                            {
+                                <button type="button" class="btn btn-danger btn-xs btnDisabled" data-toggle="modal" data-target="#myModal" id="@item.Name" name="@item.ID"> <i class="fas fa-user-slash"></i></button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-success btn-xs btnEnabled" data-toggle="modal" data-target="#myModalActive" id="@item.Name" name="@item.ID"> <i class="fas fa-user-check"></i></button>
+                            }
+                        </td>
+                    </tr>
+                }
 
-        }
+            }
+        </tbody>
     </table>
 </div>
 <!--Modal para activar-->
@@ -125,3 +147,34 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(function () {
+        $('#usuarios tfoot th').each(function () {
+            var title = $(this).text();
+            if (title.length <= 0) {
+                $(this).html('<input type="text" id="filter" class="form-control" style="display:none;" placeholder="Filtrar ' + title + '" />');
+            } else {
+                $(this).html('<input type="text" id="filter" class="form-control" placeholder="Filtrar ' + title + '" />');
+            }
+        });
+        $('#usuarios').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },initComplete: function () {
+                // Apply the search
+                this.api().columns().every(function () {
+                    var that = this;
+
+                    $('#filter', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

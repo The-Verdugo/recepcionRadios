@@ -51,6 +51,7 @@ namespace RecepcionDeRadios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name,Username,Password,Level,Active")] User user)
         {
+            
             if (ModelState.IsValid)
             {
                 user.ID = Guid.NewGuid().ToString();
@@ -89,16 +90,13 @@ namespace RecepcionDeRadios.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,Username,Password,Level,Active")] User user)
+        public ActionResult Edit([Bind(Include = "ID,Name,Password,Level,Active")] User user, String usuario)
         {
+            user.Username = usuario;
             if (ModelState.IsValid)
             {
                 if (user == null)
                     return HttpNotFound();
-                var currentRole = db.UserRolesMapping.Where(r => r.UserId == user.ID).FirstOrDefault();
-                if (currentRole == null)
-                    return HttpNotFound();
-                currentRole.RoleId = user.Level;
                 db.Entry(user).State = EntityState.Modified;
                 if (user.Password != null)
                 {

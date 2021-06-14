@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Recepción de radios</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/Scripts/jquery-3.4.1.min.js")
+    @Styles.Render("~/Content/toastr.css")
+    @Scripts.Render("~/Scripts/jquery-3.4.1.js")
+    @Styles.Render("~/Content/chips.css")
+    <script type="text/javascript" charset="utf8" src="~/Scripts/DataTables/jquery.dataTables.js" defer></script>
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("Styles", required: false)
+    <link rel="stylesheet" type="text/css" href="~/Content/DataTables/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
-   
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,13 +28,13 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <a class="navbar-brand" href="@Url.Action("create","receiparticle")" style="margin:auto; vertical-align:auto; align-content:center;">
-                        <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="https://aclara.mx/img/clientes/vidanta_blanco.png">
+                        <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="~/Resources/logo_bco.png">
                     </a>
                 }
                 else
                 {
                     <a class="navbar-brand" href="@Url.Action("Index","Home")" style="margin:auto; vertical-align:auto; align-content:center;">
-                        <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="https://aclara.mx/img/clientes/vidanta_blanco.png">
+                        <img alt="Logo" style="height: 22px; width: 113px; display:block; margin:auto;" src="~/Resources/logo_bco.png">
                     </a>
                 }
 
@@ -68,20 +72,23 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container-fluid">
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Recepción de radios</p>
         </footer>
     </div>
+
+
+    @RenderSection("scripts", required: false)
     @Scripts.Render("~/Scripts/cardsReceipArticle.js")
+    @Scripts.Render("~/Scripts/chips.js")
     @Scripts.Render("~/Scripts/UserActive.js")
     @Scripts.Render("~/Scripts/ReceipArticleDetailEdit.js")
     @Scripts.Render("~/Scripts/comments.js")
-    @Scripts.Render("~/Scripts/stacktable.js")
+    @Scripts.Render("~/Scripts/toastr.js")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>
