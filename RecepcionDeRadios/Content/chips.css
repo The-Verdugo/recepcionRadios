@@ -1,31 +1,4 @@
-﻿
-.chip {
-    display: inline-block;
-    margin: 5px;
-    padding: 0 15px;
-    height: 50px;
-    font-size: 11px;
-    line-height: 50px;
-    border-radius: 25px;
-    background-color: #f1f1f1;
+﻿.clase {
+    white-space: nowrap;
+    overflow-x: auto;
 }
-    .chip:hover {
-        background-color: #d3d3d3;
-        cursor:pointer;
-    }
-
-tr:hover {
-    cursor:pointer;
-}
-.closebtn {
-    padding-left: 10px;
-    color: #888;
-    font-weight: bold;
-    float: right;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-    .closebtn:hover {
-        color: #000;
-    }

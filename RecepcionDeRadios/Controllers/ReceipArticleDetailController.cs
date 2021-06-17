@@ -14,6 +14,7 @@ using ClosedXML.Excel;
 using Newtonsoft.Json;
 using RecepcionDeRadios.DAL;
 using RecepcionDeRadios.Models;
+using EntityState = System.Data.Entity.EntityState;
 
 namespace RecepcionDeRadios.Controllers
 {
@@ -70,12 +71,13 @@ namespace RecepcionDeRadios.Controllers
         [HttpPost]
         public JsonResult PaseSalida(string[] articlesid,string folio)
         {
+            db.Configuration.ProxyCreationEnabled = false;
             bool estado = false;
             try
             {
                 foreach (var article in articlesid)
                 {
-                    ReceipArticleDetail receipArticleDetail = db.ReceipArticleDetails.Where(c => c.Id.ToString().Contains(article)).First();
+                    ReceipArticleDetail receipArticleDetail = db.ReceipArticleDetails.Where(c => c.Id.ToString().Contains(article)).ToList().First();
                     receipArticleDetail.Status = 2;
                     receipArticleDetail.PaseSalida = folio;
                     receipArticleDetail.FechaEntregaProveedor = DateTime.Now;
@@ -132,7 +134,7 @@ namespace RecepcionDeRadios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,ReceipArticleID,ArticleID,Status,Description,ReportedFailure,FechaEntregaUsuario,FechaEntregaProveedor,PaseSalida,FolioBaja")] ReceipArticleDetail receipArticleDetail)
         {
-                db.Entry(receipArticleDetail).State = EntityState.Modified;
+                db.Entry(receipArticleDetail).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.BOOL = true;
 

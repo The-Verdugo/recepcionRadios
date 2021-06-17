@@ -3,63 +3,62 @@
 @{
     ViewBag.Title = "Details";
 }
+<div class="container">
+    <h2>Detalles del usuario</h2>
 
-<h2>Details</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Username)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Username)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Level)
+            </dt>
+            @switch (Model.Level)
+            {
+                case 1:
+                    <dd>Administrador</dd>
+                    break;
+                case 2:
+                    <dd>Técnico</dd>
+                    break;
+                default:
+                    break;
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Level)
-        </dt>
-        @switch (Model.Level)
-        {
-            case 1:
-                <dd>Administrador</dd>
-                break;
-            case 2:
-                <dd>Técnico</dd>
-                break;
-            default:
-                break;
-        }
+            <dt>
+                @Html.DisplayNameFor(model => model.Active)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
+            @switch (Model.Active)
+            {
+                case 1:
+                    <dd>Si</dd>
+                    break;
+                case 2:
+                    <dd>No</dd>
+                    break;
+                default:
+                    break;
+            }
 
-        @switch (Model.Active)
-        {
-            case 1:
-                <dd>Si</dd>
-                break;
-            case 2:
-                <dd>No</dd>
-                break;
-            default:
-                break;
-        }
-
-    </dl>
+        </dl>
+    </div>
+    <p>
+        <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<RecepcionDeRadios.Models.Bitacora>
+
+@{
+    ViewBag.Title = "Bitacora";
+}
+<div class="container">
+    <div class="col-lg-12">
+        <h2>Bitacora de cambios en los registros</h2>
+        <table class="table table-hover table-striped clase" id="bitacoraTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.accion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tabla)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PropertyModified)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OldValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NewValue)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fecha)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr  style="cursor:pointer;" onclick="window.location='@Url.Action("Details", new { id=item.Id })'">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tabla)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PropertyModified)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OldValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NewValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    
+
+    $(function () {
+        $('#bitacoraTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+            },
+            "scrollX": true
+        });
+        
+    });
+    
+</script>

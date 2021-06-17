@@ -10,7 +10,7 @@ namespace RecepcionDeRadios.DAL
     {
         protected override void Seed(RecepcionDeRadiosContext context)
         {
-            var user = new User{ID="1",Name="Ruben Hernandez Puerta",Username="OTH9503",Password = BCrypt.Net.BCrypt.HashPassword("Soporte22"),Active=1 };
+            var user = new User{ID="1",Name="Administrador",Username="admin",Password = BCrypt.Net.BCrypt.HashPassword("admin"),Level=1,Active=1 };
             context.Users.Add(user);
             context.SaveChanges();
             var roles = new List<Role>

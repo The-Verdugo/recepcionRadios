@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using RecepcionDeRadios.DAL;
 using RecepcionDeRadios.Models;
+using EntityState = System.Data.Entity.EntityState;
 
 namespace RecepcionDeRadios.Controllers
 {
@@ -115,6 +116,7 @@ namespace RecepcionDeRadios.Controllers
         [HttpPost]
         public JsonResult ChangeActiveUser(string id,int active)
         {
+            db.Configuration.ProxyCreationEnabled = false;
             bool estado = false;
             var ReceipArticleID = 0;
             try

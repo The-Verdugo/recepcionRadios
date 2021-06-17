@@ -1,0 +1,82 @@
+﻿@model RecepcionDeRadios.Models.Bitacora
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="container">
+    <h2>Detalles de cambio</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.accion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.accion)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Tabla)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Tabla)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PropertyModified)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PropertyModified)
+            </dd>
+
+            <dt>
+                Registro modificado
+            </dt>
+
+            <dd>
+                <a href="@Url.Action("Details",Model.Tabla, new { id=Model.PrimaryKeyValue })"><span class="badge badgeindex">Ver Registro Modificado</span></a>
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.OldValue)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OldValue)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NewValue)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NewValue)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </dt>
+
+            <dd>
+                @ViewBag.UserEdit.Name
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Fecha)
+            </dd>
+
+        </dl>
+    </div>
+
+    <p>
+        <a href="javascript:history.back();" class="btn btn-default btnsmall"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a>
+    </p>
+</div>

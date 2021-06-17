@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using RecepcionDeRadios.DAL;
 using RecepcionDeRadios.Models;
+using EntityState = System.Data.Entity.EntityState;
 
 namespace RecepcionDeRadios.Controllers
 {
